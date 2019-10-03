@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include "protocol.hpp"
-#include "test.hpp"
 
 int main() {
     std::setbuf(stdin, NULL);
@@ -12,8 +11,6 @@ int main() {
 
     if (input == "uai") {
         UAI::listen();
-    } else if (input == "test") {
-        test();
     } else if (input == "about") {
         std::cout << "AtaxxEngine" << std::endl;
         std::cout << "Written in C++" << std::endl;
