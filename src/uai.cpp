@@ -1,10 +1,11 @@
 #include <chrono>
 #include <iostream>
+#include <libataxx/move.hpp>
 #include <libataxx/position.hpp>
 #include <thread>
 #include "options.hpp"
 #include "protocol.hpp"
-#include "search.hpp"
+#include "search/search.hpp"
 
 std::thread search_thread;
 volatile bool search_stop = false;
@@ -183,44 +184,44 @@ void position(libataxx::Position &pos, std::stringstream &stream) {
 void go(const libataxx::Position &pos, std::stringstream &stream) {
     stop();
 
-    SearchOptions options;
+    search::Settings options;
     std::string word;
 
     while (stream >> word) {
         // Node search
         if (word == "nodes") {
-            options.type = SearchType::Nodes;
+            options.type = search::Type::Nodes;
             stream >> options.nodes;
         }
         // Depth search
         else if (word == "depth") {
-            options.type = SearchType::Depth;
+            options.type = search::Type::Depth;
             stream >> options.depth;
         }
         // Infinite search
         else if (word == "infinite") {
-            options.type = SearchType::Infinite;
+            options.type = search::Type::Infinite;
         }
         // Movetime
         else if (word == "movetime") {
-            options.type = SearchType::Movetime;
+            options.type = search::Type::Movetime;
             stream >> options.movetime;
         }
         // Time search
         else if (word == "btime") {
-            options.type = SearchType::Time;
+            options.type = search::Type::Time;
             stream >> options.btime;
         } else if (word == "wtime") {
-            options.type = SearchType::Time;
+            options.type = search::Type::Time;
             stream >> options.wtime;
         } else if (word == "binc") {
-            options.type = SearchType::Time;
+            options.type = search::Type::Time;
             stream >> options.binc;
         } else if (word == "winc") {
-            options.type = SearchType::Time;
+            options.type = search::Type::Time;
             stream >> options.winc;
         } else if (word == "movestogo") {
-            options.type = SearchType::Time;
+            options.type = search::Type::Time;
             stream >> options.movestogo;
         } else {
             if (Options::checks["debug"].get()) {
@@ -230,7 +231,10 @@ void go(const libataxx::Position &pos, std::stringstream &stream) {
         }
     }
 
-    search_thread = std::thread(search, pos, options, &search_stop);
+    if (Options::combos["search"].get() == "minimax") {
+        search_thread =
+            std::thread(search::minimax::root, pos, options, &search_stop);
+    }
 }
 
 // The move that we were pondering about got played
@@ -257,6 +261,7 @@ void listen() {
 
     // Create options
     Options::checks["debug"] = Options::Check(false);
+    Options::combos["search"] = Options::Combo("minimax", {"minimax"});
 
     Options::print();
 

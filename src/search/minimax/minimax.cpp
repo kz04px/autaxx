@@ -1,13 +1,19 @@
+#include "minimax.hpp"
 #include <cassert>
-#include <libataxx/position.hpp>
 #include <limits>
+#include "../search.hpp"
 #include "eval.hpp"
-#include "search.hpp"
+
+using namespace std::chrono;
+
+namespace search {
+
+namespace minimax {
 
 // Minimax algorithm (negamax)
-int minimax(SearchController &controller,
-            SearchStats &stats,
-            SearchStack *stack,
+int minimax(Controller &controller,
+            Stats &stats,
+            Stack *stack,
             const libataxx::Position &pos,
             const int depth) {
     assert(stack);
@@ -18,8 +24,7 @@ int minimax(SearchController &controller,
         return 0;
     } else if (stats.nodes >= controller.max_nodes) {
         return 0;
-    } else if (std::chrono::high_resolution_clock::now() >
-               controller.end_time) {
+    } else if (high_resolution_clock::now() > controller.end_time) {
         return 0;
     }
 
@@ -77,3 +82,7 @@ int minimax(SearchController &controller,
 
     return best_score;
 }
+
+}  // namespace minimax
+
+}  // namespace search

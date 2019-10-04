@@ -1,26 +1,38 @@
-#include "search.hpp"
 #include <chrono>
 #include <iostream>
-#include "options.hpp"
+#include "../../options.hpp"
+#include "../controller.hpp"
+#include "../pv.hpp"
+#include "../search.hpp"
+#include "../settings.hpp"
+#include "../stack.hpp"
+#include "../stats.hpp"
+#include "minimax.hpp"
+
+using namespace std::chrono;
+
+namespace search {
+
+namespace minimax {
 
 // Perform a search as specified in the options
-void search(const libataxx::Position &pos,
-            const SearchOptions &options,
-            volatile bool *stop) {
+void root(const libataxx::Position &pos,
+          const search::Settings &options,
+          volatile bool *stop) {
     assert(stop);
 
     int depth = MAX_DEPTH;
-    const auto start_time = std::chrono::high_resolution_clock::now();
+    const auto start_time = high_resolution_clock::now();
     PV pv;
-    SearchStats stats;
-    SearchStack stack[MAX_DEPTH + 1];
-    SearchController controller;
+    Stats stats;
+    Stack stack[MAX_DEPTH + 1];
+    Controller controller;
     controller.stop = stop;
     controller.max_nodes = std::numeric_limits<std::uint64_t>::max();
-    controller.end_time = start_time + std::chrono::hours(1);
+    controller.end_time = start_time + hours(1);
 
     switch (options.type) {
-        case SearchType::Time: {
+        case search::Type::Time: {
             int search_time = 0;
 
             // Calculate time usage
@@ -36,21 +48,19 @@ void search(const libataxx::Position &pos,
             }
             assert(search_time > 0);
 
-            controller.end_time =
-                start_time + std::chrono::milliseconds(search_time);
+            controller.end_time = start_time + milliseconds(search_time);
             break;
         }
-        case SearchType::Depth:
+        case search::Type::Depth:
             depth = options.depth;
             break;
-        case SearchType::Nodes:
+        case search::Type::Nodes:
             controller.max_nodes = options.nodes;
             break;
-        case SearchType::Movetime:
-            controller.end_time =
-                start_time + std::chrono::milliseconds(options.movetime);
+        case search::Type::Movetime:
+            controller.end_time = start_time + milliseconds(options.movetime);
             break;
-        case SearchType::Infinite:
+        case search::Type::Infinite:
             break;
         default:
             break;
@@ -64,13 +74,12 @@ void search(const libataxx::Position &pos,
     // Iterative deepening
     for (int i = 1; i <= depth; ++i) {
         const int score = minimax(controller, stats, stack, pos, i);
-        auto finish = std::chrono::high_resolution_clock::now();
+        auto finish = high_resolution_clock::now();
 
         assert(-MATE_SCORE < score && score < MATE_SCORE);
 
-        if (i > 1 &&
-            (*stop || stats.nodes >= controller.max_nodes ||
-             std::chrono::high_resolution_clock::now() > controller.end_time)) {
+        if (i > 1 && (*stop || stats.nodes >= controller.max_nodes ||
+                      high_resolution_clock::now() > controller.end_time)) {
             break;
         }
 
@@ -79,7 +88,7 @@ void search(const libataxx::Position &pos,
         assert(legal_pv(pos, pv));
 
         // Send info string
-        std::chrono::duration<double> elapsed = finish - start_time;
+        duration<double> elapsed = finish - start_time;
         std::cout << "info"
                   << " score cs " << score << " depth " << i << " seldepth "
                   << stats.seldepth << " time "
@@ -110,14 +119,6 @@ void search(const libataxx::Position &pos,
     }
 }
 
-// Check the legality of a PV based on a given board
-bool legal_pv(const libataxx::Position &pos, const PV &pv) {
-    libataxx::Position npos = pos;
-    for (const auto &move : pv) {
-        if (!npos.legal_move(move)) {
-            return false;
-        }
-        npos.makemove(move);
-    }
-    return true;
-}
+}  // namespace minimax
+
+}  // namespace search

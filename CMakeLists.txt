@@ -28,10 +28,10 @@ endif()
 add_executable(
     autaxx
     src/main.cpp
-    src/minimax.cpp
     src/options.cpp
-    src/search.cpp
     src/uai.cpp
+    src/search/minimax/minimax.cpp
+    src/search/minimax/root.cpp
 )
 
 # Add the test executable
@@ -45,10 +45,10 @@ add_executable(
     tests/options-combo.cpp
     tests/options-spin.cpp
     tests/options-string.cpp
-    src/minimax.cpp
     src/options.cpp
-    src/search.cpp
     src/uai.cpp
+    src/search/minimax/minimax.cpp
+    src/search/minimax/root.cpp
 )
 
 set_property(TARGET autaxx-test PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE FALSE)
