@@ -32,6 +32,7 @@ add_executable(
     src/uai.cpp
     src/search/minimax/minimax.cpp
     src/search/minimax/root.cpp
+    src/search/random/root.cpp
 )
 
 # Add the test executable
@@ -50,6 +51,7 @@ add_executable(
     src/uai.cpp
     src/search/minimax/minimax.cpp
     src/search/minimax/root.cpp
+    src/search/random/root.cpp
 )
 
 set_property(TARGET autaxx-test PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE FALSE)

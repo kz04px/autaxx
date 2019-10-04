@@ -234,6 +234,8 @@ void go(const libataxx::Position &pos, std::stringstream &stream) {
     if (Options::combos["search"].get() == "minimax") {
         search_thread =
             std::thread(search::minimax::root, pos, options, &search_stop);
+    } else if (Options::combos["search"].get() == "random") {
+        search::random::root(pos);
     }
 }
 
@@ -261,7 +263,8 @@ void listen() {
 
     // Create options
     Options::checks["debug"] = Options::Check(false);
-    Options::combos["search"] = Options::Combo("minimax", {"minimax"});
+    Options::combos["search"] =
+        Options::Combo("minimax", {"minimax", "random"});
 
     Options::print();
 

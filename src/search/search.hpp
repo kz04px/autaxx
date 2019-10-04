@@ -17,6 +17,12 @@ void root(const libataxx::Position &pos,
 
 }  // namespace minimax
 
+namespace random {
+
+void root(const libataxx::Position &pos);
+
+}  // namespace random
+
 }  // namespace search
 
 #endif
