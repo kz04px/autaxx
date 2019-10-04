@@ -236,6 +236,9 @@ void go(const libataxx::Position &pos, std::stringstream &stream) {
             std::thread(search::minimax::root, pos, options, &search_stop);
     } else if (Options::combos["search"].get() == "random") {
         search::random::root(pos);
+    } else if (Options::combos["search"].get() == "alphabeta") {
+        search_thread =
+            std::thread(search::alphabeta::root, pos, options, &search_stop);
     }
 }
 
@@ -264,7 +267,7 @@ void listen() {
     // Create options
     Options::checks["debug"] = Options::Check(false);
     Options::combos["search"] =
-        Options::Combo("minimax", {"minimax", "random"});
+        Options::Combo("alphabeta", {"alphabeta", "minimax", "random"});
 
     Options::print();
 

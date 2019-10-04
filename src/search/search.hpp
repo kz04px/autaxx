@@ -23,6 +23,14 @@ void root(const libataxx::Position &pos);
 
 }  // namespace random
 
+namespace alphabeta {
+
+void root(const libataxx::Position &pos,
+          const search::Settings &options,
+          volatile bool *stop);
+
+}  // namespace alphabeta
+
 }  // namespace search
 
 #endif

@@ -1,11 +1,11 @@
-#ifndef MINIMAX_EVAL_HPP
-#define MINIMAX_EVAL_HPP
+#ifndef ALPHABETA_EVAL_HPP
+#define ALPHABETA_EVAL_HPP
 
 #include <libataxx/position.hpp>
 
 namespace search {
 
-namespace minimax {
+namespace alphabeta {
 
 // Return the evaluation of the position from the side to move's point of view
 int eval(const libataxx::Position &pos) {
@@ -14,7 +14,7 @@ int eval(const libataxx::Position &pos) {
     return 100 * (num_us - num_them);
 }
 
-}  // namespace minimax
+}  // namespace alphabeta
 
 }  // namespace search
 

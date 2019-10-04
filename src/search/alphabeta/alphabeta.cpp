@@ -1,0 +1,97 @@
+#include "alphabeta.hpp"
+#include <cassert>
+#include <limits>
+#include "../search.hpp"
+#include "eval.hpp"
+
+using namespace std::chrono;
+
+namespace search {
+
+namespace alphabeta {
+
+// Minimax algorithm (negamax)
+int alphabeta(Controller &controller,
+              Stats &stats,
+              Stack *stack,
+              const libataxx::Position &pos,
+              int alpha,
+              const int beta,
+              int depth) {
+    assert(stack);
+    assert(controller.stop);
+    assert(alpha < beta);
+
+    // Stop if asked
+    if (*controller.stop) {
+        return 0;
+    } else if (stats.nodes >= controller.max_nodes) {
+        return 0;
+    } else if (high_resolution_clock::now() > controller.end_time) {
+        return 0;
+    }
+
+    // Update seldepth stats
+    stats.seldepth = std::max(stack->ply, stats.seldepth);
+
+    // Return mate or draw scores if the game is over
+    if (pos.gameover()) {
+        const int num_us = pos.us().count();
+        const int num_them = pos.them().count();
+
+        if (num_us > num_them) {
+            return MATE_SCORE - stack->ply;
+        } else if (num_us < num_them) {
+            return -MATE_SCORE + stack->ply;
+        } else {
+            return 0;
+        }
+    }
+
+    // Make sure we stop searching
+    if (depth == 0 || stack->ply >= MAX_DEPTH) {
+        return eval(pos);
+    }
+
+    int best_score = std::numeric_limits<int>::min();
+
+    // Move generation
+    libataxx::Move moves[libataxx::max_moves];
+    const int num_moves = pos.legal_moves(moves);
+
+    // Keeping track of the node count
+    stats.nodes += num_moves;
+
+    // Play every legal move and run negamax on the resulting position
+    for (int i = 0; i < num_moves; ++i) {
+        (stack + 1)->pv.clear();
+
+        libataxx::Position npos = pos;
+        npos.makemove(moves[i]);
+        const int score = -alphabeta(
+            controller, stats, stack + 1, npos, -beta, -alpha, depth - 1);
+
+        if (score > best_score) {
+            alpha = score;
+
+            // Update PV
+            stack->pv.clear();
+            stack->pv.push_back(moves[i]);
+            stack->pv.insert(stack->pv.begin() + 1,
+                             (stack + 1)->pv.begin(),
+                             (stack + 1)->pv.end());
+
+            best_score = score;
+        }
+
+        if (alpha >= beta) {
+            break;
+        }
+    }
+
+    return best_score;
+}
+
+}  // namespace alphabeta
+
+}  // namespace search

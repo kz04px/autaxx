@@ -30,6 +30,8 @@ add_executable(
     src/main.cpp
     src/options.cpp
     src/uai.cpp
+    src/search/alphabeta/alphabeta.cpp
+    src/search/alphabeta/root.cpp
     src/search/minimax/minimax.cpp
     src/search/minimax/root.cpp
     src/search/random/root.cpp
@@ -49,6 +51,8 @@ add_executable(
     tests/search-minimax.cpp
     src/options.cpp
     src/uai.cpp
+    src/search/alphabeta/alphabeta.cpp
+    src/search/alphabeta/root.cpp
     src/search/minimax/minimax.cpp
     src/search/minimax/root.cpp
     src/search/random/root.cpp
