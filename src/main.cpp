@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "protocol.hpp"
+#include "protocol/protocol.hpp"
 
 int main() {
     std::setbuf(stdin, NULL);

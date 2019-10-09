@@ -2,7 +2,7 @@
 #include <libataxx/position.hpp>
 #include <sstream>
 #include <string>
-#include "../src/protocol.hpp"
+#include "../src/protocol/uai/moves.hpp"
 
 TEST_CASE("UAI::moves()") {
     const std::pair<std::string, std::string> tests[] = {

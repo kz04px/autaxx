@@ -29,7 +29,16 @@ add_executable(
     autaxx
     src/main.cpp
     src/options.cpp
-    src/uai.cpp
+    src/protocol/uai/go.cpp
+    src/protocol/uai/isready.cpp
+    src/protocol/uai/listen.cpp
+    src/protocol/uai/moves.cpp
+    src/protocol/uai/position.cpp
+    src/protocol/uai/setoption.cpp
+    src/protocol/uai/uainewgame.cpp
+    src/protocol/uai/extension/display.cpp
+    src/protocol/uai/extension/perft.cpp
+    src/protocol/uai/extension/split.cpp
     src/search/alphabeta/alphabeta.cpp
     src/search/alphabeta/root.cpp
     src/search/minimax/minimax.cpp
@@ -50,7 +59,9 @@ add_executable(
     tests/options-string.cpp
     tests/search-minimax.cpp
     src/options.cpp
-    src/uai.cpp
+    src/protocol/uai/moves.cpp
+    src/protocol/uai/position.cpp
+    src/protocol/uai/setoption.cpp
     src/search/alphabeta/alphabeta.cpp
     src/search/alphabeta/root.cpp
     src/search/minimax/minimax.cpp
