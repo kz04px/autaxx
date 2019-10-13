@@ -1,35 +1,76 @@
-#ifndef SEARCH_SEARCH_HPP
-#define SEARCH_SEARCH_HPP
+#ifndef SEARCH_HPP
+#define SEARCH_HPP
 
-#define MAX_DEPTH 128
-#define MATE_SCORE 100000
-
+#include <cstdint>
 #include <libataxx/position.hpp>
-#include "settings.hpp"
+#include <memory>
+#include <thread>
 
 namespace search {
 
-namespace minimax {
+enum Type
+{
+    Time = 0,
+    Depth,
+    Nodes,
+    Movetime,
+    Infinite
+};
 
-void root(const libataxx::Position &pos,
-          const search::Settings &options,
-          volatile bool *stop);
+struct Settings {
+    int type = Type::Time;
+    // Time search
+    int btime = -1;
+    int wtime = -1;
+    int binc = -1;
+    int winc = -1;
+    int movestogo = -1;
+    // Movetime search
+    int movetime = -1;
+    // Nodes search
+    std::uint64_t nodes = -1;
+    // Depth search
+    int depth = -1;
+};
 
-}  // namespace minimax
+struct Stats {
+    void clear() {
+        nodes = 0;
+        seldepth = 0;
+    }
+    std::uint64_t nodes = 0;
+    int seldepth = 0;
+};
 
-namespace random {
+struct Controller {
+    std::uint64_t max_nodes = 0;
+    std::chrono::high_resolution_clock::time_point end_time;
+    volatile bool stop = false;
+};
 
-void root(const libataxx::Position &pos);
+class Search {
+   public:
+    ~Search() {
+        stop();
+    }
 
-}  // namespace random
+    virtual void go(const libataxx::Position pos, const Settings &settings) = 0;
 
-namespace alphabeta {
+    void stop() noexcept {
+        controller_.stop = true;
+        if (search_thread_.joinable()) {
+            search_thread_.join();
+        }
+        controller_.stop = false;
+    }
 
-void root(const libataxx::Position &pos,
-          const search::Settings &options,
-          volatile bool *stop);
+   protected:
+    std::thread search_thread_;
+    Stats stats_;
+    Controller controller_;
+};
 
-}  // namespace alphabeta
+extern std::unique_ptr<Search> search_main;
 
 }  // namespace search
 

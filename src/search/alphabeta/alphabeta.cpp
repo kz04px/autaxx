@@ -1,8 +1,6 @@
 #include "alphabeta.hpp"
 #include <cassert>
-#include <limits>
-#include "../search.hpp"
-#include "eval.hpp"
+#include <chrono>
 
 using namespace std::chrono;
 
@@ -10,29 +8,25 @@ namespace search {
 
 namespace alphabeta {
 
-// Minimax algorithm (negamax)
-int alphabeta(Controller &controller,
-              Stats &stats,
-              Stack *stack,
-              const libataxx::Position &pos,
-              int alpha,
-              const int beta,
-              int depth) {
+int Alphabeta::alphabeta(Stack *stack,
+                         const libataxx::Position &pos,
+                         int alpha,
+                         const int beta,
+                         int depth) {
     assert(stack);
-    assert(controller.stop);
     assert(alpha < beta);
 
     // Stop if asked
-    if (*controller.stop) {
+    if (controller_.stop) {
         return 0;
-    } else if (stats.nodes >= controller.max_nodes) {
+    } else if (stats_.nodes >= controller_.max_nodes) {
         return 0;
-    } else if (high_resolution_clock::now() > controller.end_time) {
+    } else if (high_resolution_clock::now() > controller_.end_time) {
         return 0;
     }
 
     // Update seldepth stats
-    stats.seldepth = std::max(stack->ply, stats.seldepth);
+    stats_.seldepth = std::max(stack->ply, stats_.seldepth);
 
     // Return mate or draw scores if the game is over
     if (pos.gameover()) {
@@ -40,16 +34,16 @@ int alphabeta(Controller &controller,
         const int num_them = pos.them().count();
 
         if (num_us > num_them) {
-            return MATE_SCORE - stack->ply;
+            return mate_score - stack->ply;
         } else if (num_us < num_them) {
-            return -MATE_SCORE + stack->ply;
+            return -mate_score + stack->ply;
         } else {
             return 0;
         }
     }
 
     // Make sure we stop searching
-    if (depth == 0 || stack->ply >= MAX_DEPTH) {
+    if (depth == 0 || stack->ply >= max_depth) {
         return eval(pos);
     }
 
@@ -59,8 +53,10 @@ int alphabeta(Controller &controller,
     libataxx::Move moves[libataxx::max_moves];
     const int num_moves = pos.legal_moves(moves);
 
+    assert(num_moves > 0);
+
     // Keeping track of the node count
-    stats.nodes += num_moves;
+    stats_.nodes += num_moves;
 
     // Play every legal move and run negamax on the resulting position
     for (int i = 0; i < num_moves; ++i) {
@@ -68,8 +64,7 @@ int alphabeta(Controller &controller,
 
         libataxx::Position npos = pos;
         npos.makemove(moves[i]);
-        const int score = -alphabeta(
-            controller, stats, stack + 1, npos, -beta, -alpha, depth - 1);
+        const int score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
 
         if (score > best_score) {
             alpha = score;

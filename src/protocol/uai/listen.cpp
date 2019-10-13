@@ -1,5 +1,9 @@
 #include <iostream>
+#include <memory>
 #include "../../options.hpp"
+#include "../../search/alphabeta/alphabeta.hpp"
+#include "../../search/mostcaptures/mostcaptures.hpp"
+#include "../../search/random/random.hpp"
 #include "../protocol.hpp"
 #include "extension/display.hpp"
 #include "extension/perft.hpp"
@@ -10,6 +14,8 @@
 #include "position.hpp"
 #include "setoption.hpp"
 #include "uainewgame.hpp"
+
+using namespace search;
 
 namespace UAI {
 
@@ -24,8 +30,8 @@ void listen() {
 
     // Create options
     Options::checks["debug"] = Options::Check(false);
-    Options::combos["search"] =
-        Options::Combo("alphabeta", {"alphabeta", "minimax", "random"});
+    Options::combos["search"] = Options::Combo(
+        "alphabeta", {"alphabeta", "minimax", "mostcaptures", "random"});
 
     Options::print();
 
@@ -42,8 +48,6 @@ void listen() {
         stream >> word;
 
         if (word == "isready") {
-            // TODO:
-            // -- Initialise hash etc
             isready();
             break;
         } else if (word == "setoption") {
@@ -51,6 +55,15 @@ void listen() {
         } else if (word == "quit") {
             return;
         }
+    }
+
+    // Set search type
+    if (Options::combos["search"].get() == "random") {
+        search_main = std::unique_ptr<Search>(new random::Random());
+    } else if (Options::combos["search"].get() == "mostcaptures") {
+        search_main = std::unique_ptr<Search>(new mostcaptures::MostCaptures());
+    } else if (Options::combos["search"].get() == "alphabeta") {
+        search_main = std::unique_ptr<Search>(new alphabeta::Alphabeta());
     }
 
     // isready received, now we're ready to do something
