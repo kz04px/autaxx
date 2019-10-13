@@ -1,18 +1,13 @@
 #include "alphabeta.hpp"
 #include <cassert>
 #include <chrono>
+#include "phase.hpp"
 
 using namespace std::chrono;
 
 namespace search {
 
 namespace alphabeta {
-
-float phase(const libataxx::Position &pos) {
-    const int both = (pos.us() | pos.them()).count();
-    const int all = (~pos.gaps()).count();
-    return static_cast<float>(both) / all;
-}
 
 int Alphabeta::alphabeta(Stack *stack,
                          const libataxx::Position &pos,
