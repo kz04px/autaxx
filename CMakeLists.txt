@@ -59,6 +59,7 @@ add_executable(
     tests/options-combo.cpp
     tests/options-spin.cpp
     tests/options-string.cpp
+    tests/hashtable.cpp
     #tests/search-minimax.cpp
     src/options.cpp
     src/protocol/uai/moves.cpp
