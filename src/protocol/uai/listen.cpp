@@ -2,6 +2,7 @@
 #include <memory>
 #include "../../options.hpp"
 #include "../../search/alphabeta/alphabeta.hpp"
+#include "../../search/minimax/minimax.hpp"
 #include "../../search/mostcaptures/mostcaptures.hpp"
 #include "../../search/random/random.hpp"
 #include "../protocol.hpp"
@@ -64,6 +65,8 @@ void listen() {
         search_main = std::unique_ptr<Search>(new mostcaptures::MostCaptures());
     } else if (Options::combos["search"].get() == "alphabeta") {
         search_main = std::unique_ptr<Search>(new alphabeta::Alphabeta());
+    } else if (Options::combos["search"].get() == "minimax") {
+        search_main = std::unique_ptr<Search>(new minimax::Minimax());
     }
 
     // isready received, now we're ready to do something
