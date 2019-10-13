@@ -37,6 +37,10 @@ class Alphabeta : public Search {
                                 const int beta,
                                 int depth);
 
+    static void sort(const libataxx::Position &pos,
+                     libataxx::Move *moves,
+                     const int num_moves) noexcept;
+
     Stack stack_[max_depth + 1];
 };
 

@@ -55,6 +55,9 @@ int Alphabeta::alphabeta(Stack *stack,
 
     assert(num_moves > 0);
 
+    // Move ordering
+    sort(pos, moves, num_moves);
+
     // Keeping track of the node count
     stats_.nodes += num_moves;
 
