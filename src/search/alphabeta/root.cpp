@@ -15,6 +15,7 @@ void Alphabeta::root(const libataxx::Position pos,
     for (int i = 0; i < max_depth + 1; ++i) {
         stack_[i].ply = i;
         stack_[i].pv.clear();
+        stack_[i].nullmove = true;
     }
 
     PV pv;

@@ -19,6 +19,7 @@ class Alphabeta : public Search {
     struct Stack {
         int ply;
         PV pv;
+        bool nullmove;
     };
 
     void go(const libataxx::Position pos, const Settings &settings) override {

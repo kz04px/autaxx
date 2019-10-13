@@ -8,6 +8,12 @@ namespace search {
 
 namespace alphabeta {
 
+float phase(const libataxx::Position &pos) {
+    const int both = (pos.us() | pos.them()).count();
+    const int all = (~pos.gaps()).count();
+    return static_cast<float>(both) / all;
+}
+
 int Alphabeta::alphabeta(Stack *stack,
                          const libataxx::Position &pos,
                          int alpha,
@@ -45,6 +51,21 @@ int Alphabeta::alphabeta(Stack *stack,
     // Make sure we stop searching
     if (depth == 0 || stack->ply >= max_depth) {
         return eval(pos);
+    }
+
+    // Nullmove pruning
+    if (stack->ply > 0 && stack->nullmove && depth > 2 && phase(pos) < 0.9) {
+        libataxx::Position npos = pos;
+        npos.makemove(libataxx::Move::nullmove());
+
+        (stack + 1)->nullmove = false;
+        const int score =
+            -alphabeta(stack + 1, npos, -beta, -beta + 1, depth - 3);
+        (stack + 1)->nullmove = true;
+
+        if (score >= beta) {
+            return score;
+        }
     }
 
     int best_score = std::numeric_limits<int>::min();
