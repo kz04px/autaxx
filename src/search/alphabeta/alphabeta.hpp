@@ -19,6 +19,7 @@ class Alphabeta : public Search {
     struct Stack {
         int ply;
         PV pv;
+        libataxx::Move killer;
         bool nullmove;
     };
 

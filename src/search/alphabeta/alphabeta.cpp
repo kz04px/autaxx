@@ -67,7 +67,7 @@ int Alphabeta::alphabeta(Stack *stack,
     int best_score = std::numeric_limits<int>::min();
 
     // Move generation
-    auto sorter = Sorter{pos};
+    auto sorter = Sorter{pos, stack->killer};
     libataxx::Move move;
 
     // Play every legal move and run negamax on the resulting position
@@ -81,6 +81,7 @@ int Alphabeta::alphabeta(Stack *stack,
 
         if (score > best_score) {
             alpha = score;
+            best_score = score;
 
             // Update PV
             stack->pv.clear();
@@ -88,11 +89,12 @@ int Alphabeta::alphabeta(Stack *stack,
             stack->pv.insert(stack->pv.begin() + 1,
                              (stack + 1)->pv.begin(),
                              (stack + 1)->pv.end());
-
-            best_score = score;
         }
 
         if (alpha >= beta) {
+            if (pos.count_captures(move) + (move.is_single() ? 1 : 0) <= 1) {
+                stack->killer = move;
+            }
             break;
         }
     }

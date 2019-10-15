@@ -10,9 +10,9 @@ namespace alphabeta {
 
 class Sorter {
    public:
-    Sorter(const libataxx::Position &pos) {
+    Sorter(const libataxx::Position &pos, const libataxx::Move &killer) {
         num_moves_ = pos.legal_moves(moves_);
-        score(pos);
+        score(pos, killer);
     }
 
     [[nodiscard]] bool next(libataxx::Move &move) noexcept {
@@ -37,10 +37,15 @@ class Sorter {
     }
 
    private:
-    void score(const libataxx::Position &pos) noexcept {
+    void score(const libataxx::Position &pos,
+               const libataxx::Move &killer) noexcept {
         for (int i = 0; i < num_moves_; ++i) {
-            scores_[i] = pos.count_captures(moves_[i]);
-            scores_[i] += (moves_[i].is_single() ? 1 : 0);
+            if (moves_[i] == killer) {
+                scores_[i] = 100;
+            } else {
+                scores_[i] = pos.count_captures(moves_[i]);
+                scores_[i] += (moves_[i].is_single() ? 1 : 0);
+            }
         }
     }
 
