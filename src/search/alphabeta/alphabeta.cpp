@@ -2,6 +2,7 @@
 #include <cassert>
 #include <chrono>
 #include "phase.hpp"
+#include "sorter.hpp"
 
 using namespace std::chrono;
 
@@ -66,23 +67,16 @@ int Alphabeta::alphabeta(Stack *stack,
     int best_score = std::numeric_limits<int>::min();
 
     // Move generation
-    libataxx::Move moves[libataxx::max_moves];
-    const int num_moves = pos.legal_moves(moves);
-
-    assert(num_moves > 0);
-
-    // Move ordering
-    sort(pos, moves, num_moves);
-
-    // Keeping track of the node count
-    stats_.nodes += num_moves;
+    auto sorter = Sorter{pos};
+    libataxx::Move move;
 
     // Play every legal move and run negamax on the resulting position
-    for (int i = 0; i < num_moves; ++i) {
+    while (sorter.next(move)) {
+        stats_.nodes++;
         (stack + 1)->pv.clear();
 
         libataxx::Position npos = pos;
-        npos.makemove(moves[i]);
+        npos.makemove(move);
         const int score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
 
         if (score > best_score) {
@@ -90,7 +84,7 @@ int Alphabeta::alphabeta(Stack *stack,
 
             // Update PV
             stack->pv.clear();
-            stack->pv.push_back(moves[i]);
+            stack->pv.push_back(move);
             stack->pv.insert(stack->pv.begin() + 1,
                              (stack + 1)->pv.begin(),
                              (stack + 1)->pv.end());
