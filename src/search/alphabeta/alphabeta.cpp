@@ -4,6 +4,8 @@
 #include "phase.hpp"
 #include "sorter.hpp"
 
+constexpr int futility_margins[] = {800, 800, 1600, 1600};
+
 using namespace std::chrono;
 
 namespace search {
@@ -49,8 +51,13 @@ int Alphabeta::alphabeta(Stack *stack,
         return eval(pos);
     }
 
+    const auto static_eval = eval(pos);
+    const bool root = stack->ply == 0;
+
+    assert(depth > 0);
+
     // Nullmove pruning
-    if (stack->ply > 0 && stack->nullmove && depth > 2 && phase(pos) < 0.9) {
+    if (!root && stack->nullmove && depth > 2 && phase(pos) < 0.9) {
         libataxx::Position npos = pos;
         npos.makemove(libataxx::Move::nullmove());
 
@@ -62,6 +69,12 @@ int Alphabeta::alphabeta(Stack *stack,
         if (score >= beta) {
             return score;
         }
+    }
+
+    // Reverse futility pruning
+    if (!root && stack->nullmove && depth <= std::size(futility_margins) &&
+        static_eval + futility_margins[depth - 1] < alpha) {
+        return alpha;
     }
 
     int best_score = std::numeric_limits<int>::min();
@@ -77,6 +90,7 @@ int Alphabeta::alphabeta(Stack *stack,
 
         libataxx::Position npos = pos;
         npos.makemove(move);
+
         const int score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
 
         if (score > best_score) {
