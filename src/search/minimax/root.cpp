@@ -80,7 +80,7 @@ void Minimax::root(const libataxx::Position pos,
         // Send info string
         duration<double> elapsed = finish - start_time;
         std::cout << "info"
-                  << " score cs " << score << " depth " << i << " seldepth "
+                  << " score cp " << score << " depth " << i << " seldepth "
                   << stats_.seldepth << " time "
                   << static_cast<int>(elapsed.count() * 1000) << " nodes "
                   << stats_.nodes;
