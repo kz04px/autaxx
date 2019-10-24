@@ -41,10 +41,18 @@ class Sorter {
                const libataxx::Move &killer) noexcept {
         for (int i = 0; i < num_moves_; ++i) {
             if (moves_[i] == killer) {
-                scores_[i] = 100;
+                scores_[i] = 10000;
             } else {
-                scores_[i] = pos.count_captures(moves_[i]);
-                scores_[i] += (moves_[i].is_single() ? 1 : 0);
+                const auto captures = pos.count_captures(moves_[i]);
+
+                if (moves_[i].is_single()) {
+                    scores_[i] = 10 * (captures + 1);
+                } else {
+                    const auto neighbours =
+                        libataxx::Bitboard{moves_[i].from()}.singles() &
+                        pos.us();
+                    scores_[i] = 10 * captures - neighbours.count();
+                }
             }
         }
     }
