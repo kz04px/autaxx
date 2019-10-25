@@ -8,6 +8,18 @@ namespace search {
 
 namespace alphabeta {
 
+// clang-format off
+constexpr int pst[49] = {
+    30, 20, 10, 10, 10, 20, 30,
+    20, 10, 10,  5, 10, 10, 20,
+    10, 10,  5,  0,  5, 10, 10,
+    10,  5,  0,  0,  0,  5, 10,
+    10, 10,  5,  0,  5, 10, 10,
+    20, 10, 10,  5, 10, 10, 20,
+    30, 20, 10, 10, 10, 20, 30,
+};
+// clang-format on
+
 class Sorter {
    public:
     Sorter(const libataxx::Position &pos, const libataxx::Move &killer) {
@@ -39,19 +51,27 @@ class Sorter {
    private:
     void score(const libataxx::Position &pos,
                const libataxx::Move &killer) noexcept {
+        if (num_moves_ <= 1) {
+            return;
+        }
+
         for (int i = 0; i < num_moves_; ++i) {
             if (moves_[i] == killer) {
                 scores_[i] = 10000;
-            } else {
-                const auto captures = pos.count_captures(moves_[i]);
+                continue;
+            }
 
+            const auto captures = pos.count_captures(moves_[i]);
+
+            if (captures) {
+                scores_[i] = 100 * captures;
+                scores_[i] += moves_[i].is_single() ? 100 : 0;
+            } else {
                 if (moves_[i].is_single()) {
-                    scores_[i] = 10 * (captures + 1);
+                    scores_[i] = pst[static_cast<int>(moves_[i].to())];
                 } else {
-                    const auto neighbours =
-                        libataxx::Bitboard{moves_[i].from()}.singles() &
-                        pos.us();
-                    scores_[i] = 10 * captures - neighbours.count();
+                    scores_[i] = pst[static_cast<int>(moves_[i].to())] -
+                                 pst[static_cast<int>(moves_[i].from())];
                 }
             }
         }
