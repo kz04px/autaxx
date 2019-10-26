@@ -33,11 +33,10 @@ constexpr int hole_penalties[] = {0, 0, 0, 0, 100, 200, 300, 400, 500};
     }
 
     // Holes
-    const auto reachable_us = us.singles() | us.doubles();
-    for (const auto &sq : them.singles() & empty & reachable_us) {
+    for (const auto &sq : us.singles() & empty) {
         const auto bb = libataxx::Bitboard{sq};
-        const auto neighbours = bb.singles() & them;
-        score += hole_penalties[neighbours.count()];
+        const auto neighbours = bb.singles() & us;
+        score -= hole_penalties[neighbours.count()];
     }
 
     return score;
