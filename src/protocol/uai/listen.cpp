@@ -23,9 +23,6 @@ namespace UAI {
 // Communicate with the UAI protocol (Universal Ataxx Interface)
 // Based on the UCI protocol (Universal Chess Interface)
 void listen() {
-    libataxx::Position pos;
-    uainewgame(pos);
-
     std::cout << "id name AtaxxEngine" << std::endl;
     std::cout << "id author kz04px" << std::endl;
 
@@ -68,6 +65,9 @@ void listen() {
     } else if (Options::combos["search"].get() == "minimax") {
         search_main = std::unique_ptr<Search>(new minimax::Minimax());
     }
+
+    libataxx::Position pos;
+    uainewgame(pos);
 
     // isready received, now we're ready to do something
     bool quit = false;

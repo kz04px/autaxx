@@ -64,6 +64,9 @@ class Search {
         controller_.stop = false;
     }
 
+    virtual void clear() noexcept {
+    }
+
    protected:
     std::thread search_thread_;
     Stats stats_;
