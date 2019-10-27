@@ -2,7 +2,7 @@
 #include <iostream>
 #include <thread>
 #include "../../options.hpp"
-#include "../../search/random/random.hpp"
+#include "../../search/search.hpp"
 
 using namespace search;
 
