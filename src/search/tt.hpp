@@ -9,7 +9,7 @@ namespace search {
 template <class T>
 class TT {
    public:
-    TT(unsigned int mb) {
+    TT(unsigned int mb) : filled_{0} {
         if (mb < 0) {
             mb = 1;
         }
@@ -28,6 +28,7 @@ class TT {
 
     void add(const std::uint64_t hash, const T &t) noexcept {
         const auto idx = index(hash);
+        filled_ += (entries_[idx].hash == 0 ? 1 : 0);
         entries_[idx] = t;
     }
 
@@ -36,7 +37,12 @@ class TT {
     }
 
     void clear() noexcept {
+        filled_ = 0;
         std::memset(entries_, 0, max_entries_ * sizeof(T));
+    }
+
+    [[nodiscard]] int hashfull() const noexcept {
+        return 1000 * (static_cast<double>(filled_) / max_entries_);
     }
 
    private:
@@ -44,7 +50,8 @@ class TT {
         return hash % max_entries_;
     }
 
-    unsigned int max_entries_;
+    std::size_t max_entries_;
+    std::size_t filled_;
     T *entries_;
 };
 
