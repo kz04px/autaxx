@@ -51,6 +51,8 @@ int Alphabeta::alphabeta(Stack *stack,
         return eval(pos);
     }
 
+    const bool root = stack->ply == 0;
+    const bool pvnode = (beta != alpha + 1);
     const int alpha_orig = alpha;
     libataxx::Move ttmove;
 
@@ -60,7 +62,7 @@ int Alphabeta::alphabeta(Stack *stack,
         ttmove = ttentry.move;
         stats_.tthits++;
 
-        if (ttentry.depth >= depth) {
+        if (!pvnode && ttentry.depth >= depth) {
             const int entry_score = eval_from_tt(ttentry.score, stack->ply);
 
             switch (ttentry.flag) {
@@ -90,7 +92,6 @@ int Alphabeta::alphabeta(Stack *stack,
     }
 
     const auto static_eval = eval(pos);
-    const bool root = stack->ply == 0;
 
     assert(depth > 0);
 
@@ -123,14 +124,24 @@ int Alphabeta::alphabeta(Stack *stack,
     libataxx::Move move;
 
     // Play every legal move and run negamax on the resulting position
+    int i = 0;
     while (sorter.next(move)) {
+        i++;
         stats_.nodes++;
         (stack + 1)->pv.clear();
 
         libataxx::Position npos = pos;
         npos.makemove(move);
 
-        const int score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
+        int score = 0;
+        if (i == 1) {
+            score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
+        } else {
+            score = -alphabeta(stack + 1, npos, -alpha - 1, -alpha, depth - 1);
+            if (alpha < score && score < beta) {
+                score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
+            }
+        }
 
         if (score > best_score) {
             best_score = score;
