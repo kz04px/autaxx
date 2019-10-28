@@ -39,6 +39,9 @@ constexpr int hole_penalties[] = {0, 0, 0, 0, 100, 200, 300, 400, 500};
         score -= hole_penalties[neighbours.count()];
     }
 
+    // Surrounded
+    score += 15 * (us & (~(empty.singles()))).count();
+
     return score;
 }
 
