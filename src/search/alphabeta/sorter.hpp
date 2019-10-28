@@ -22,9 +22,11 @@ constexpr int pst[49] = {
 
 class Sorter {
    public:
-    Sorter(const libataxx::Position &pos, const libataxx::Move &killer) {
+    Sorter(const libataxx::Position &pos,
+           const libataxx::Move &ttmove,
+           const libataxx::Move &killer) {
         num_moves_ = pos.legal_moves(moves_);
-        score(pos, killer);
+        score(pos, ttmove, killer);
     }
 
     [[nodiscard]] bool next(libataxx::Move &move) noexcept {
@@ -50,14 +52,18 @@ class Sorter {
 
    private:
     void score(const libataxx::Position &pos,
+               const libataxx::Move &ttmove,
                const libataxx::Move &killer) noexcept {
         if (num_moves_ <= 1) {
             return;
         }
 
         for (int i = 0; i < num_moves_; ++i) {
-            if (moves_[i] == killer) {
+            if (moves_[i] == ttmove) {
                 scores_[i] = 10000;
+                continue;
+            } else if (moves_[i] == killer) {
+                scores_[i] = 9999;
                 continue;
             }
 

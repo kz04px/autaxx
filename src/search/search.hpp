@@ -36,9 +36,11 @@ struct Settings {
 struct Stats {
     void clear() {
         nodes = 0;
+        tthits = 0;
         seldepth = 0;
     }
     std::uint64_t nodes = 0;
+    std::uint64_t tthits = 0;
     int seldepth = 0;
 };
 

@@ -15,7 +15,7 @@ namespace alphabeta {
 int Alphabeta::alphabeta(Stack *stack,
                          const libataxx::Position &pos,
                          int alpha,
-                         const int beta,
+                         int beta,
                          int depth) {
     assert(stack);
     assert(alpha < beta);
@@ -51,6 +51,44 @@ int Alphabeta::alphabeta(Stack *stack,
         return eval(pos);
     }
 
+    const int alpha_orig = alpha;
+    libataxx::Move ttmove;
+
+    // Probe transposition table
+    const auto ttentry = tt_.poll(pos.hash());
+    if (ttentry.hash == pos.hash() && pos.legal_move(ttentry.move)) {
+        ttmove = ttentry.move;
+        stats_.tthits++;
+
+        if (ttentry.depth >= depth) {
+            const int entry_score = eval_from_tt(ttentry.score, stack->ply);
+
+            switch (ttentry.flag) {
+                case TTEntry::Flag::Exact:
+                    // Update PV
+                    stack->pv.clear();
+                    stack->pv.push_back(ttentry.move);
+                    return entry_score;
+                case TTEntry::Flag::Lower:
+                    alpha = std::max(alpha, entry_score);
+                    break;
+                case TTEntry::Flag::Upper:
+                    beta = std::min(beta, entry_score);
+                    break;
+                default:
+                    abort();
+                    break;
+            }
+
+            if (alpha >= beta) {
+                // Update PV
+                stack->pv.clear();
+                stack->pv.push_back(ttentry.move);
+                return entry_score;
+            }
+        }
+    }
+
     const auto static_eval = eval(pos);
     const bool root = stack->ply == 0;
 
@@ -78,9 +116,10 @@ int Alphabeta::alphabeta(Stack *stack,
     }
 
     int best_score = std::numeric_limits<int>::min();
+    libataxx::Move best_move;
 
     // Move generation
-    auto sorter = Sorter{pos, stack->killer};
+    auto sorter = Sorter{pos, ttmove, stack->killer};
     libataxx::Move move;
 
     // Play every legal move and run negamax on the resulting position
@@ -94,15 +133,18 @@ int Alphabeta::alphabeta(Stack *stack,
         const int score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
 
         if (score > best_score) {
-            alpha = score;
             best_score = score;
-
+            best_move = move;
             // Update PV
             stack->pv.clear();
             stack->pv.push_back(move);
             stack->pv.insert(stack->pv.begin() + 1,
                              (stack + 1)->pv.begin(),
                              (stack + 1)->pv.end());
+
+            if (score > alpha) {
+                alpha = score;
+            }
         }
 
         if (alpha >= beta) {
@@ -113,7 +155,23 @@ int Alphabeta::alphabeta(Stack *stack,
         }
     }
 
-    return best_score;
+    // Add to transposition table
+    TTEntry nentry;
+    nentry.hash = pos.hash();
+    nentry.move = best_move;
+    nentry.score = eval_to_tt(best_score, stack->ply);
+    nentry.depth = depth;
+    nentry.flag = TTEntry::Flag::Exact;
+    if (best_score <= alpha_orig) {
+        nentry.flag = TTEntry::Flag::Upper;
+    } else if (best_score >= beta) {
+        nentry.flag = TTEntry::Flag::Lower;
+    }
+    tt_.add(pos.hash(), nentry);
+
+    assert(tt_.poll(pos.hash()) == nentry);
+
+    return alpha;
 }
 
 }  // namespace alphabeta

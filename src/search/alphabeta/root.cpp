@@ -79,13 +79,25 @@ void Alphabeta::root(const libataxx::Position pos,
         pv = stack_[0].pv;
         assert(legal_pv(pos, pv));
 
+#ifndef DNDEBUG
+        // The TT should always have the root position in it
+        const auto ttentry = tt_.poll(pos.hash());
+        assert(ttentry.hash == pos.hash());
+        assert(ttentry.move == pv[0]);
+        assert(pos.legal_move(ttentry.move));
+        assert(tt_.poll(pos.hash()).depth >= i);
+#endif
+
         // Send info string
         duration<double> elapsed = finish - start_time;
-        std::cout << "info"
-                  << " score cp " << score << " depth " << i << " seldepth "
-                  << stats_.seldepth << " time "
-                  << static_cast<int>(elapsed.count() * 1000) << " nodes "
-                  << stats_.nodes;
+        std::cout << "info";
+        std::cout << " depth " << i;
+        std::cout << " seldepth " << stats_.seldepth;
+        std::cout << " score cp " << score;
+        std::cout << " time " << static_cast<int>(elapsed.count() * 1000);
+        std::cout << " nodes " << stats_.nodes;
+        std::cout << " tthits " << stats_.tthits;
+        std::cout << " hashfull " << tt_.hashfull();
         if (elapsed.count() > 0) {
             std::cout << " nps "
                       << static_cast<std::uint64_t>(stats_.nodes /
