@@ -28,6 +28,15 @@ class Alphabeta : public Search {
         search_thread_ = std::thread(&Alphabeta::root, this, pos, settings);
     }
 
+    void clear() noexcept override {
+        for (int i = 0; i < max_depth + 1; ++i) {
+            stack_[i].ply = i;
+            stack_[i].pv.clear();
+            stack_[i].killer = libataxx::Move::nomove();
+            stack_[i].nullmove = true;
+        }
+    }
+
    private:
     [[nodiscard]] static int eval(const libataxx::Position &pos) noexcept;
 
