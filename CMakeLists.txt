@@ -60,6 +60,7 @@ add_executable(
     tests/options-spin.cpp
     tests/options-string.cpp
     tests/hashtable.cpp
+    tests/alphabeta_sorter.cpp
     #tests/search-minimax.cpp
     src/options.cpp
     src/protocol/uai/moves.cpp
