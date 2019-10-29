@@ -126,7 +126,6 @@ int Alphabeta::alphabeta(Stack *stack,
     // Play every legal move and run negamax on the resulting position
     int i = 0;
     while (sorter.next(move)) {
-        i++;
         stats_.nodes++;
         (stack + 1)->pv.clear();
 
@@ -134,7 +133,7 @@ int Alphabeta::alphabeta(Stack *stack,
         npos.makemove(move);
 
         int score = 0;
-        if (i == 1) {
+        if (i == 0) {
             score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
         } else {
             score = -alphabeta(stack + 1, npos, -alpha - 1, -alpha, depth - 1);
@@ -159,11 +158,20 @@ int Alphabeta::alphabeta(Stack *stack,
         }
 
         if (alpha >= beta) {
+#ifndef NDEBUG
+            // Count beta cutoffs
+            stats_.cutoffs[i]++;
+#endif
+
+            // Killer moves
             if (pos.count_captures(move) + (move.is_single() ? 1 : 0) <= 1) {
                 stack->killer = move;
             }
+
             break;
         }
+
+        i++;
     }
 
     // Add to transposition table

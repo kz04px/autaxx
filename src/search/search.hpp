@@ -2,6 +2,7 @@
 #define SEARCH_HPP
 
 #include <cstdint>
+#include <cstring>
 #include <libataxx/position.hpp>
 #include <memory>
 #include <thread>
@@ -38,10 +39,16 @@ struct Stats {
         nodes = 0;
         tthits = 0;
         seldepth = 0;
+#ifndef NDEBUG
+        std::memset(cutoffs, 0, libataxx::max_moves * sizeof(std::uint64_t));
+#endif
     }
     std::uint64_t nodes = 0;
     std::uint64_t tthits = 0;
     int seldepth = 0;
+#ifndef NDEBUG
+    std::uint64_t cutoffs[libataxx::max_moves] = {};
+#endif
 };
 
 struct Controller {

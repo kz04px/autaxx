@@ -79,7 +79,7 @@ void Alphabeta::root(const libataxx::Position pos,
         pv = stack_[0].pv;
         assert(legal_pv(pos, pv));
 
-#ifndef DNDEBUG
+#ifndef NDEBUG
         // The TT should always have the root position in it
         const auto ttentry = tt_.poll(pos.hash());
         assert(ttentry.hash == pos.hash());
@@ -111,6 +111,21 @@ void Alphabeta::root(const libataxx::Position pos,
         }
         std::cout << std::endl;
     }
+
+#ifndef NDEBUG
+    std::uint64_t total = 0;
+    for (int i = 0; i < libataxx::max_moves; ++i) {
+        total += stats_.cutoffs[i];
+    }
+    for (int i = 0; i < 10 && total; ++i) {
+        const auto percent =
+            100 * static_cast<float>(stats_.cutoffs[i]) / total;
+        std::cout << "info string";
+        std::cout << " index " << i;
+        std::cout << " cutoffs " << percent << "%";
+        std::cout << std::endl;
+    }
+#endif
 
     if (pv.size() > 0) {
         std::cout << "bestmove " << pv.at(0) << std::endl;
