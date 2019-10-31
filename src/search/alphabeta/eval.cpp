@@ -17,7 +17,7 @@ constexpr int pst[49] = {
 };
 // clang-format on
 
-constexpr int hole_penalties[] = {0, 0, 0, 0, 100, 200, 300, 400, 500};
+constexpr int hole_penalties[] = {0, 0, 25, 50, 100, 200, 300, 400, 500};
 
 [[nodiscard]] constexpr int eval_us(const libataxx::Bitboard &us,
                                     const libataxx::Bitboard &them,
