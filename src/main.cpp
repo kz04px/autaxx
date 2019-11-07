@@ -15,6 +15,11 @@ int main() {
         std::cout << "Autaxx" << std::endl;
         std::cout << "Written in C++" << std::endl;
         std::cout << "Using libataxx" << std::endl;
+        std::cout << "Date " << __DATE__ << std::endl;
+        std::cout << "Time " << __TIME__ << std::endl;
+#ifndef NDEBUG
+        std::cout << "Debug build" << std::endl;
+#endif
     } else {
         std::cout << "Unknown protocol" << std::endl;
     }
