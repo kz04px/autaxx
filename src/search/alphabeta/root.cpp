@@ -8,6 +8,8 @@ namespace search {
 
 namespace alphabeta {
 
+constexpr int bounds[] = {50, 200, 800, 10 * mate_score};
+
 void Alphabeta::root(const libataxx::Position pos,
                      const Settings &settings) noexcept {
     // Clear
@@ -64,7 +66,31 @@ void Alphabeta::root(const libataxx::Position pos,
 
     // Iterative deepening
     for (int i = 1; i <= depth; ++i) {
-        const int score = alphabeta(stack_, pos, -mate_score, mate_score, i);
+        // Aspiration windows
+        int score = 0;
+        if (i < 3) {
+            score = alphabeta(stack_, pos, -mate_score, mate_score, i);
+        } else {
+            int idx_lower = 0;
+            int idx_upper = 0;
+            while (true) {
+                const int lower = -bounds[idx_lower];
+                const int upper = bounds[idx_upper];
+
+                assert(upper > lower);
+
+                score = alphabeta(stack_, pos, lower, upper, i);
+
+                if (score <= lower) {
+                    idx_lower++;
+                } else if (score >= upper) {
+                    idx_upper++;
+                } else {
+                    break;
+                }
+            }
+        }
+
         const auto finish = high_resolution_clock::now();
 
         assert(-mate_score < score && score < mate_score);
