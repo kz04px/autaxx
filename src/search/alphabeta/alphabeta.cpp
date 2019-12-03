@@ -2,6 +2,7 @@
 #include <cassert>
 #include <chrono>
 #include "phase.hpp"
+#include "reduction.hpp"
 #include "sorter.hpp"
 
 constexpr int futility_margins[] = {800, 800, 1600, 1600};
@@ -47,7 +48,7 @@ int Alphabeta::alphabeta(Stack *stack,
     }
 
     // Make sure we stop searching
-    if (depth == 0 || stack->ply >= max_depth) {
+    if (depth <= 0 || stack->ply >= max_depth) {
         return eval(pos);
     }
 
@@ -136,8 +137,10 @@ int Alphabeta::alphabeta(Stack *stack,
         if (i == 0) {
             score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
         } else {
-            score = -alphabeta(stack + 1, npos, -alpha - 1, -alpha, depth - 1);
-            if (alpha < score && score < beta) {
+            const int r = reduction(npos, i, depth, pvnode);
+            score =
+                -alphabeta(stack + 1, npos, -alpha - 1, -alpha, depth - 1 - r);
+            if (score > alpha) {
                 score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
             }
         }
