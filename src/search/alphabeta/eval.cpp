@@ -52,6 +52,9 @@ int Alphabeta::eval(const libataxx::Position &pos) noexcept {
     score += eval_us(pos.us(), pos.them(), pos.empty());
     score -= eval_us(pos.them(), pos.us(), pos.empty());
 
+    // Turn bonus
+    score += 200;
+
     return score;
 }
 
