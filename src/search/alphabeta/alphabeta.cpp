@@ -164,9 +164,7 @@ int Alphabeta::alphabeta(Stack *stack,
 #endif
 
             // Killer moves
-            if (pos.count_captures(move) + (move.is_single() ? 1 : 0) <= 1) {
-                stack->killer = move;
-            }
+            stack->killer = move;
 
             break;
         }
