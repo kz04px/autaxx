@@ -2,6 +2,7 @@
 #include <memory>
 #include "../../options.hpp"
 #include "../../search/alphabeta/alphabeta.hpp"
+#include "../../search/leastcaptures/leastcaptures.hpp"
 #include "../../search/minimax/minimax.hpp"
 #include "../../search/mostcaptures/mostcaptures.hpp"
 #include "../../search/random/random.hpp"
@@ -29,8 +30,14 @@ void listen() {
     // Create options
     Options::checks["debug"] = Options::Check(false);
     Options::spins["hash"] = Options::Spin(1, 2048, 128);
-    Options::combos["search"] = Options::Combo(
-        "alphabeta", {"alphabeta", "minimax", "mostcaptures", "random"});
+    Options::combos["search"] = Options::Combo("alphabeta",
+                                               {
+                                                   "alphabeta",
+                                                   "minimax",
+                                                   "mostcaptures",
+                                                   "random",
+                                                   "leastcaptures",
+                                               });
 
     Options::print();
 
@@ -66,6 +73,9 @@ void listen() {
             new alphabeta::Alphabeta(Options::spins["hash"].get()));
     } else if (Options::combos["search"].get() == "minimax") {
         search_main = std::unique_ptr<Search>(new minimax::Minimax());
+    } else if (Options::combos["search"].get() == "leastcaptures") {
+        search_main =
+            std::unique_ptr<Search>(new leastcaptures::LeastCaptures());
     }
 
     libataxx::Position pos;
