@@ -18,7 +18,7 @@ class Random : public Search {
         const int num_moves = pos.legal_moves(moves);
 
         if (num_moves == 0) {
-            std::cout << libataxx::Move::nullmove() << std::endl;
+            std::cout << "bestmove 0000" << std::endl;
             return;
         }
 
