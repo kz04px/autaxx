@@ -59,7 +59,7 @@ struct Controller {
 
 class Search {
    public:
-    ~Search() {
+    virtual ~Search() {
         stop();
     }
 
