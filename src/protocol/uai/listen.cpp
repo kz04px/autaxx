@@ -3,6 +3,7 @@
 #include "../../options.hpp"
 #include "../../search/alphabeta/alphabeta.hpp"
 #include "../../search/leastcaptures/leastcaptures.hpp"
+#include "../../search/mcts/mcts.hpp"
 #include "../../search/minimax/minimax.hpp"
 #include "../../search/mostcaptures/mostcaptures.hpp"
 #include "../../search/random/random.hpp"
@@ -33,6 +34,7 @@ void listen() {
     Options::combos["search"] = Options::Combo("alphabeta",
                                                {
                                                    "alphabeta",
+                                                   "mcts",
                                                    "minimax",
                                                    "mostcaptures",
                                                    "random",
@@ -71,6 +73,8 @@ void listen() {
     } else if (Options::combos["search"].get() == "alphabeta") {
         search_main = std::unique_ptr<Search>(
             new alphabeta::Alphabeta(Options::spins["hash"].get()));
+    } else if (Options::combos["search"].get() == "mcts") {
+        search_main = std::unique_ptr<Search>(new mcts::MCTS());
     } else if (Options::combos["search"].get() == "minimax") {
         search_main = std::unique_ptr<Search>(new minimax::Minimax());
     } else if (Options::combos["search"].get() == "leastcaptures") {
