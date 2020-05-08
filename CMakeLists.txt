@@ -43,6 +43,7 @@ add_executable(
     src/search/alphabeta/alphabeta.cpp
     src/search/alphabeta/eval.cpp
     src/search/alphabeta/root.cpp
+    src/search/mcts/eval.cpp
     src/search/mcts/root.cpp
     src/search/minimax/minimax.cpp
     src/search/minimax/eval.cpp

@@ -1,11 +1,17 @@
 #include <cassert>
+#include <cmath>
 #include <iostream>
+#include "eval.hpp"
 #include "mcts.hpp"
 #include "node.hpp"
 
 using namespace std::chrono;
 
 namespace search::mcts {
+
+float sigmoid(const float score, const float k = 1.13) {
+    return 1.0f / (1.0f + std::pow(10.0f, -k * score / 400.0f));
+}
 
 Node *tree_policy(Node *n, libataxx::Position &pos) {
     assert(n);
@@ -27,34 +33,21 @@ Node *tree_policy(Node *n, libataxx::Position &pos) {
 }
 
 float default_policy(const libataxx::Position &pos) {
-    auto npos = pos;
-
-    while (!npos.gameover()) {
-        libataxx::Move moves[libataxx::max_moves];
-        const int num_moves = npos.legal_moves(moves);
-        const int idx = rand() % num_moves;
-        npos.makemove(moves[idx]);
-    }
-
     float score = 0.5f;
 
-    switch (npos.result()) {
+    switch (pos.result()) {
         case libataxx::Result::BlackWin:
-            score = 1.0f;
-            break;
         case libataxx::Result::WhiteWin:
             score = 0.0f;
             break;
         case libataxx::Result::Draw:
             score = 0.5f;
             break;
+        case libataxx::Result::None:
+            score = sigmoid(0.1 * eval(pos));
+            break;
         default:
             abort();
-    }
-
-    // Side to move's POV
-    if (pos.turn() == libataxx::Side::White) {
-        score = 1.0f - score;
     }
 
     return 1.0f - score;
