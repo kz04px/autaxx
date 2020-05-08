@@ -101,7 +101,7 @@ class Node {
         return best_idx;
     }
 
-    [[nodiscard]] constexpr auto best_scoring_child(const float c = 4.0) const
+    [[nodiscard]] constexpr auto best_scoring_child(const float c = 1.0) const
         noexcept {
         std::size_t best_idx = 0;
         float best_score = std::numeric_limits<float>::lowest();
