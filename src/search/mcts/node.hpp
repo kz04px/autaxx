@@ -17,8 +17,11 @@ class Node {
           reward_{0.0},
           visits_{0},
           children_left_{pos.count_moves()},
-          children_{} {
+          children_{},
+          probabilities_{} {
         children_.reserve(children_left_);
+        probabilities_.reserve(children_left_);
+        calculate_probabilities(pos);
     }
 
     Node(Node *parent,
@@ -29,9 +32,12 @@ class Node {
           reward_{0.0},
           visits_{0},
           children_left_{pos.count_moves()},
-          children_{} {
+          children_{},
+          probabilities_{} {
         assert(has_parent());
         children_.reserve(children_left_);
+        probabilities_.reserve(children_left_);
+        calculate_probabilities(pos);
     }
 
     [[nodiscard]] constexpr auto visited() const noexcept {
@@ -77,7 +83,8 @@ class Node {
         }
 
         const float q = child.reward() / child.visits();
-        const float u = c * std::sqrt(std::log(visits()) / child.visits());
+        const float u = c * probabilities_[idx] * std::sqrt(visits() - 1) /
+                        (child.visits() + 1);
         return q + u;
     }
 
@@ -94,7 +101,7 @@ class Node {
         return best_idx;
     }
 
-    [[nodiscard]] constexpr auto best_scoring_child(const float c = 1.0) const
+    [[nodiscard]] constexpr auto best_scoring_child(const float c = 4.0) const
         noexcept {
         std::size_t best_idx = 0;
         float best_score = std::numeric_limits<float>::lowest();
@@ -177,12 +184,47 @@ class Node {
     }
 
    private:
+    void calculate_probabilities(const libataxx::Position &pos) {
+        if (terminal()) {
+            return;
+        }
+
+        libataxx::Move moves[libataxx::max_moves];
+        const int num_moves = pos.legal_moves(moves);
+        float total = 0.0f;
+
+        // Probabilities
+        for (int i = 0; i < num_moves; ++i) {
+            const float p = pos.count_captures(moves[i]);
+            probabilities_.push_back(p);
+            total += p;
+        }
+
+        // Softmax
+        for (auto &prob : probabilities_) {
+            if (total == 0.0) {
+                prob = 1.0f / num_moves;
+            } else {
+                prob = prob / total;
+            }
+        }
+
+#ifndef NDEBUG
+        float ntotal = 0.0f;
+        for (auto &prob : probabilities_) {
+            ntotal += prob;
+        }
+        assert(std::abs(ntotal - 1.0f) <= 0.001f);
+#endif
+    }
+
     Node *parent_;
     libataxx::Move move_;
     float reward_;
     int visits_;
     int children_left_;
     std::vector<Node> children_;
+    std::vector<float> probabilities_;
 };
 
 }  // namespace search::mcts
