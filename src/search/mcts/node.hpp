@@ -195,7 +195,7 @@ class Node {
 
         // Probabilities
         for (int i = 0; i < num_moves; ++i) {
-            const float p = pos.count_captures(moves[i]);
+            const float p = pos.count_captures(moves[i]) + moves[i].is_single();
             probabilities_.push_back(p);
             total += p;
         }
