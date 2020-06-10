@@ -267,7 +267,7 @@ void MCTS::root(const libataxx::Position pos,
             break;
         }
 
-        if (stats_.nodes & 1024 &&
+        if (stats_.nodes % 1024 == 0 &&
             high_resolution_clock::now() > controller_.end_time) {
             break;
         }

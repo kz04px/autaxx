@@ -19,6 +19,8 @@ class Node {
           children_left_{pos.count_moves()},
           children_{},
           probabilities_{} {
+        assert(root());
+        assert(!has_parent());
         children_.reserve(children_left_);
         probabilities_.reserve(children_left_);
         calculate_probabilities(pos);
@@ -34,6 +36,7 @@ class Node {
           children_left_{pos.count_moves()},
           children_{},
           probabilities_{} {
+        assert(!root());
         assert(has_parent());
         children_.reserve(children_left_);
         probabilities_.reserve(children_left_);
@@ -48,7 +51,7 @@ class Node {
         return reward_;
     }
 
-    [[nodiscard]] constexpr auto expanded() const noexcept {
+    [[nodiscard]] auto expanded() const noexcept {
         return !children_.empty();
     }
 
@@ -72,8 +75,8 @@ class Node {
         return parent() != nullptr;
     }
 
-    [[nodiscard]] constexpr auto child_score(const std::size_t idx,
-                                             const float c) const noexcept {
+    [[nodiscard]] auto child_score(const std::size_t idx, const float c) const
+        noexcept {
         assert(idx < num_children());
 
         const auto &child = children_[idx];
@@ -88,7 +91,7 @@ class Node {
         return q + u;
     }
 
-    [[nodiscard]] constexpr auto most_visited_child() const noexcept {
+    [[nodiscard]] auto most_visited_child() const noexcept {
         std::size_t best_idx = 0;
 
         for (std::size_t i = 1; i < num_children(); ++i) {
@@ -101,8 +104,7 @@ class Node {
         return best_idx;
     }
 
-    [[nodiscard]] constexpr auto best_scoring_child(const float c = 1.0) const
-        noexcept {
+    [[nodiscard]] auto best_scoring_child(const float c = 1.0) const noexcept {
         std::size_t best_idx = 0;
         float best_score = std::numeric_limits<float>::lowest();
 
@@ -118,15 +120,15 @@ class Node {
         return best_idx;
     }
 
-    [[nodiscard]] constexpr auto stable() const noexcept {
+    [[nodiscard]] auto stable() const noexcept {
         return most_visited_child() == best_scoring_child(0.0f);
     }
 
-    [[nodiscard]] constexpr std::size_t num_children() const noexcept {
+    [[nodiscard]] std::size_t num_children() const noexcept {
         return children_.size();
     }
 
-    [[nodiscard]] constexpr auto child(const std::size_t idx) noexcept {
+    [[nodiscard]] auto child(const std::size_t idx) noexcept {
         assert(idx < num_children());
         return &children_[idx];
     }
@@ -135,14 +137,15 @@ class Node {
         return move_;
     }
 
-    [[nodiscard]] constexpr Node *expand(
-        const libataxx::Position &pos) noexcept {
+    [[nodiscard]] Node *expand(const libataxx::Position &pos) noexcept {
         assert(!terminal());
         assert(expandable());
 
         libataxx::Move moves[libataxx::max_moves];
         const int num_moves = pos.legal_moves(moves);
         assert(num_children() < num_moves);
+        assert(num_moves <= children_.capacity());
+        assert(pos.legal_move(moves[num_children()]));
         auto npos = pos;
         npos.makemove(moves[num_children()]);
         children_.emplace_back(this, npos, moves[num_children()]);
@@ -171,7 +174,7 @@ class Node {
         return children_;
     }
 
-    [[nodiscard]] constexpr auto root() const noexcept {
+    [[nodiscard]] constexpr bool root() const noexcept {
         return !has_parent();
     }
 
