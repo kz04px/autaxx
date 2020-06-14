@@ -56,7 +56,6 @@ void listen() {
         stream >> word;
 
         if (word == "isready") {
-            isready();
             break;
         } else if (word == "setoption") {
             setoption(stream);
@@ -84,6 +83,8 @@ void listen() {
 
     libataxx::Position pos;
     uainewgame(pos);
+
+    isready();
 
     // isready received, now we're ready to do something
     bool quit = false;
