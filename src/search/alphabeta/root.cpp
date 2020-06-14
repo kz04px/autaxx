@@ -111,7 +111,7 @@ void Alphabeta::root(const libataxx::Position pos,
         assert(ttentry.hash == pos.hash());
         assert(ttentry.move == pv[0]);
         assert(pos.legal_move(ttentry.move));
-        assert(tt_.poll(pos.hash()).depth >= i);
+        assert(ttentry.depth >= i);
 #endif
 
         // Send info string
