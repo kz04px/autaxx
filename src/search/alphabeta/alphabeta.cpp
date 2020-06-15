@@ -35,16 +35,24 @@ int Alphabeta::alphabeta(Stack *stack,
     stats_.seldepth = std::max(stack->ply, stats_.seldepth);
 
     // Return mate or draw scores if the game is over
-    if (pos.gameover()) {
-        const int num_us = pos.us().count();
-        const int num_them = pos.them().count();
-
-        if (num_us > num_them) {
-            return mate_score - stack->ply;
-        } else if (num_us < num_them) {
-            return -mate_score + stack->ply;
-        } else {
+    const auto r = pos.result();
+    if (r != libataxx::Result::None) {
+        if (r == libataxx::Result::Draw) {
             return 0;
+        } else if (r == libataxx::Result::BlackWin) {
+            if (pos.turn() == libataxx::Side::Black) {
+                return mate_score - stack->ply;
+            } else {
+                return -mate_score + stack->ply;
+            }
+        } else if (r == libataxx::Result::WhiteWin) {
+            if (pos.turn() == libataxx::Side::White) {
+                return mate_score - stack->ply;
+            } else {
+                return -mate_score + stack->ply;
+            }
+        } else {
+            abort();
         }
     }
 
