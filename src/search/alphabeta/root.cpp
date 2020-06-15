@@ -75,6 +75,8 @@ void Alphabeta::root(const libataxx::Position pos,
             int idx_lower = 0;
             int idx_upper = 0;
             while (true) {
+                assert(idx_lower < bounds.size());
+                assert(idx_upper < bounds.size());
                 const int lower = -bounds[idx_lower];
                 const int upper = bounds[idx_upper];
 
