@@ -25,13 +25,13 @@ constexpr Score turn_bonus = {200, 200};
 constexpr Score hole_penalties[] = {
     {0, 0},
     {0, 0},
-    {25, 25},
-    {50, 50},
-    {100, 100},
-    {200, 200},
-    {300, 300},
-    {400, 400},
-    {500, 500},
+    {-25, -25},
+    {-50, -50},
+    {-100, -100},
+    {-200, -200},
+    {-300, -300},
+    {-400, -400},
+    {-500, -500},
 };
 
 [[nodiscard]] constexpr Score eval_us(const libataxx::Bitboard &us,
@@ -51,7 +51,7 @@ constexpr Score hole_penalties[] = {
     for (const auto &sq : us.singles() & empty) {
         const auto bb = libataxx::Bitboard{sq};
         const auto neighbours = bb.singles() & us;
-        score -= hole_penalties[neighbours.count()];
+        score += hole_penalties[neighbours.count()];
     }
 
     // Surrounded
