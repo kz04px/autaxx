@@ -27,7 +27,8 @@ int Alphabeta::alphabeta(Stack *stack,
         return 0;
     } else if (stats_.nodes >= controller_.max_nodes) {
         return 0;
-    } else if (high_resolution_clock::now() > controller_.end_time) {
+    } else if (stats_.nodes % 1024 == 0 &&
+               high_resolution_clock::now() >= controller_.end_time) {
         return 0;
     }
 
