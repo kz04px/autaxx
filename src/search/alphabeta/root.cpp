@@ -1,3 +1,4 @@
+#include <array>
 #include <cassert>
 #include <iostream>
 #include "alphabeta.hpp"
@@ -8,7 +9,7 @@ namespace search {
 
 namespace alphabeta {
 
-constexpr int bounds[] = {50, 200, 800, 10 * mate_score};
+constexpr std::array<int, 4> bounds = {50, 200, 800, 10 * mate_score};
 
 void Alphabeta::root(const libataxx::Position pos,
                      const Settings &settings) noexcept {

@@ -1,11 +1,12 @@
 #include "alphabeta.hpp"
+#include <array>
 #include <cassert>
 #include <chrono>
 #include "phase.hpp"
 #include "reduction.hpp"
 #include "sorter.hpp"
 
-constexpr int futility_margins[] = {800, 800, 1600, 1600};
+constexpr std::array<int, 4> futility_margins = {800, 800, 1600, 1600};
 
 using namespace std::chrono;
 
@@ -112,7 +113,7 @@ int Alphabeta::alphabeta(Stack *stack,
     }
 
     // Reverse futility pruning
-    if (!root && stack->nullmove && depth <= std::size(futility_margins) &&
+    if (!root && stack->nullmove && depth <= futility_margins.size() &&
         static_eval + futility_margins[depth - 1] < alpha) {
         return alpha;
     }
