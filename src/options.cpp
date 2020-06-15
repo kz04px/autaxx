@@ -2,6 +2,7 @@
 #include <iostream>
 
 namespace Options {
+
 std::unordered_map<std::string, Spin> spins;
 std::unordered_map<std::string, Check> checks;
 std::unordered_map<std::string, String> strings;
