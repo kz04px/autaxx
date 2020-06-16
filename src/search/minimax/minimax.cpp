@@ -57,7 +57,7 @@ int Minimax::minimax(Stack *stack, const libataxx::Position &pos, int depth) {
     for (int i = 0; i < num_moves; ++i) {
         (stack + 1)->pv.clear();
 
-        libataxx::Position npos = pos;
+        auto npos = pos;
         npos.makemove(moves[i]);
         const int score = -minimax(stack + 1, npos, depth - 1);
 

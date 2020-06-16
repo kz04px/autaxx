@@ -21,7 +21,7 @@ void split(const libataxx::Position &pos, std::stringstream &stream) {
     const int num_moves = pos.legal_moves(moves);
 
     for (int i = 0; i < num_moves; ++i) {
-        libataxx::Position npos = pos;
+        auto npos = pos;
         npos.makemove(moves[i]);
 
         const std::uint64_t nodes = npos.perft(depth - 1);

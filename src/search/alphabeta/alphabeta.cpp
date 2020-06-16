@@ -108,7 +108,7 @@ int Alphabeta::alphabeta(Stack *stack,
 
     // Nullmove pruning
     if (!root && stack->nullmove && depth > 2 && phase(pos) < 0.9) {
-        libataxx::Position npos = pos;
+        auto npos = pos;
         npos.makemove(libataxx::Move::nullmove());
 
         (stack + 1)->nullmove = false;
@@ -140,7 +140,7 @@ int Alphabeta::alphabeta(Stack *stack,
         stats_.nodes++;
         (stack + 1)->pv.clear();
 
-        libataxx::Position npos = pos;
+        auto npos = pos;
         npos.makemove(move);
 
         int score = 0;
