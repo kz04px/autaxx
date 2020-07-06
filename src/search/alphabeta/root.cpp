@@ -13,6 +13,8 @@ constexpr std::array<int, 4> bounds = {50, 200, 800, 10 * mate_score};
 
 void Alphabeta::root(const libataxx::Position pos,
                      const Settings &settings) noexcept {
+    const auto t0 = steady_clock::now();
+
     // Clear
     stats_.clear();
     for (int i = 0; i < max_depth + 1; ++i) {
@@ -155,6 +157,10 @@ void Alphabeta::root(const libataxx::Position pos,
         std::cout << std::endl;
     }
 #endif
+
+    const auto t1 = steady_clock::now();
+    const auto dt = duration_cast<milliseconds>(t1 - t0);
+    std::cout << "info time " << dt.count() << "\n";
 
     if (pv.size() > 0) {
         std::cout << "bestmove " << pv.at(0) << std::endl;
