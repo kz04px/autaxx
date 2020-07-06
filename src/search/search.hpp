@@ -53,7 +53,7 @@ struct Stats {
 
 struct Controller {
     std::uint64_t max_nodes = 0;
-    std::chrono::high_resolution_clock::time_point end_time;
+    std::chrono::steady_clock::time_point end_time;
     volatile bool stop = false;
 };
 

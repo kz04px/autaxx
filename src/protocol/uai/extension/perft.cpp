@@ -16,9 +16,9 @@ void perft(const libataxx::Position &pos, std::stringstream &stream) {
 
     std::uint64_t nodes = 0ULL;
     for (int i = 1; i <= depth; ++i) {
-        const auto start = std::chrono::high_resolution_clock::now();
+        const auto start = std::chrono::steady_clock::now();
         nodes = pos.perft(i);
-        const auto finish = std::chrono::high_resolution_clock::now();
+        const auto finish = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed = finish - start;
 
         std::cout << "info"

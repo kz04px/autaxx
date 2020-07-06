@@ -197,7 +197,7 @@ bool verify(const Node *n) {
 
 void MCTS::root(const libataxx::Position pos,
                 const Settings &settings) noexcept {
-    const auto start_time = high_resolution_clock::now();
+    const auto start_time = steady_clock::now();
     controller_.max_nodes = std::numeric_limits<std::uint64_t>::max();
     controller_.end_time = start_time + hours(1);
 
@@ -268,7 +268,7 @@ void MCTS::root(const libataxx::Position pos,
         }
 
         if (stats_.nodes % 1024 == 0 &&
-            high_resolution_clock::now() > controller_.end_time) {
+            steady_clock::now() > controller_.end_time) {
             break;
         }
     }

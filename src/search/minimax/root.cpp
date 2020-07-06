@@ -18,7 +18,7 @@ void Minimax::root(const libataxx::Position pos,
     }
 
     PV pv;
-    const auto start_time = high_resolution_clock::now();
+    const auto start_time = steady_clock::now();
     int depth = max_depth;
 
     controller_.max_nodes = std::numeric_limits<std::uint64_t>::max();
@@ -63,13 +63,13 @@ void Minimax::root(const libataxx::Position pos,
     // Iterative deepening
     for (int i = 1; i <= depth; ++i) {
         const int score = minimax(stack_, pos, i);
-        const auto finish = high_resolution_clock::now();
+        const auto finish = steady_clock::now();
 
         assert(-mate_score < score && score < mate_score);
 
         if (i > 1 &&
             (controller_.stop || stats_.nodes >= controller_.max_nodes ||
-             high_resolution_clock::now() > controller_.end_time)) {
+             steady_clock::now() > controller_.end_time)) {
             break;
         }
 

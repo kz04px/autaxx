@@ -25,7 +25,7 @@ void Alphabeta::root(const libataxx::Position pos,
     }
 
     PV pv;
-    const auto start_time = high_resolution_clock::now();
+    const auto start_time = steady_clock::now();
     int depth = max_depth;
 
     controller_.max_nodes = std::numeric_limits<std::uint64_t>::max();
@@ -96,13 +96,14 @@ void Alphabeta::root(const libataxx::Position pos,
             }
         }
 
-        const auto finish = high_resolution_clock::now();
+        const auto finish = steady_clock::now();
+        const auto dt = duration_cast<milliseconds>(finish - start_time);
 
         assert(-mate_score < score && score < mate_score);
 
         if (i > 1 &&
             (controller_.stop || stats_.nodes >= controller_.max_nodes ||
-             high_resolution_clock::now() > controller_.end_time)) {
+             finish >= controller_.end_time)) {
             break;
         }
 
@@ -120,19 +121,17 @@ void Alphabeta::root(const libataxx::Position pos,
 #endif
 
         // Send info string
-        duration<double> elapsed = finish - start_time;
         std::cout << "info";
         std::cout << " depth " << i;
         std::cout << " seldepth " << stats_.seldepth;
         std::cout << " score cp " << score;
-        std::cout << " time " << static_cast<int>(elapsed.count() * 1000);
+        std::cout << " time " << static_cast<int>(dt.count() * 1000);
         std::cout << " nodes " << stats_.nodes;
         std::cout << " tthits " << stats_.tthits;
         std::cout << " hashfull " << tt_.hashfull();
-        if (elapsed.count() > 0) {
+        if (dt.count() > 0) {
             std::cout << " nps "
-                      << static_cast<std::uint64_t>(stats_.nodes /
-                                                    elapsed.count());
+                      << static_cast<std::uint64_t>(stats_.nodes / dt.count());
         }
         if (pv.size() > 0) {
             std::cout << " pv";
