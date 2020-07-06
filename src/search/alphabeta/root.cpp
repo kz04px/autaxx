@@ -125,13 +125,12 @@ void Alphabeta::root(const libataxx::Position pos,
         std::cout << " depth " << i;
         std::cout << " seldepth " << stats_.seldepth;
         std::cout << " score cp " << score;
-        std::cout << " time " << static_cast<int>(dt.count() * 1000);
+        std::cout << " time " << dt.count();
         std::cout << " nodes " << stats_.nodes;
         std::cout << " tthits " << stats_.tthits;
         std::cout << " hashfull " << tt_.hashfull();
         if (dt.count() > 0) {
-            std::cout << " nps "
-                      << static_cast<std::uint64_t>(stats_.nodes / dt.count());
+            std::cout << " nps " << 1000 * stats_.nodes / dt.count();
         }
         if (pv.size() > 0) {
             std::cout << " pv";

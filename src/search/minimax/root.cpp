@@ -69,7 +69,7 @@ void Minimax::root(const libataxx::Position pos,
 
         if (i > 1 &&
             (controller_.stop || stats_.nodes >= controller_.max_nodes ||
-             steady_clock::now() > controller_.end_time)) {
+             steady_clock::now() >= controller_.end_time)) {
             break;
         }
 
@@ -78,16 +78,15 @@ void Minimax::root(const libataxx::Position pos,
         assert(legal_pv(pos, pv));
 
         // Send info string
-        duration<double> elapsed = finish - start_time;
-        std::cout << "info"
-                  << " score cp " << score << " depth " << i << " seldepth "
-                  << stats_.seldepth << " time "
-                  << static_cast<int>(elapsed.count() * 1000) << " nodes "
-                  << stats_.nodes;
-        if (elapsed.count() > 0) {
-            std::cout << " nps "
-                      << static_cast<std::uint64_t>(stats_.nodes /
-                                                    elapsed.count());
+        const auto dt = duration_cast<milliseconds>(finish - start_time);
+        std::cout << "info";
+        std::cout << " score cp " << score;
+        std::cout << " depth " << i;
+        std::cout << " seldepth " << stats_.seldepth;
+        std::cout << " time " << dt.count();
+        std::cout << " nodes " << stats_.nodes;
+        if (dt.count() > 0) {
+            std::cout << " nps " << 1000 * stats_.nodes / dt.count();
         }
         if (pv.size() > 0) {
             std::cout << " pv";
