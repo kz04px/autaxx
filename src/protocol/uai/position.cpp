@@ -29,8 +29,8 @@ void position(libataxx::Position &pos, std::stringstream &stream) {
         }
     } else {
         if (Options::checks["debug"].get()) {
-            std::cout << "info unknown UAI::position term \"" << word << "\""
-                      << std::endl;
+            std::cout << "info string unknown UAI::position term \"" << word
+                      << "\"" << std::endl;
         }
         return;
     }
