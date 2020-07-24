@@ -48,6 +48,10 @@ add_executable(
     src/search/minimax/minimax.cpp
     src/search/minimax/eval.cpp
     src/search/minimax/root.cpp
+
+    src/search/alphabeta/search.cpp
+    src/search/alphabeta/eval.cpp
+    src/search/alphabeta/root.cpp
 )
 
 # Add the test executable
