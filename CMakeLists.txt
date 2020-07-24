@@ -40,9 +40,9 @@ add_executable(
     src/protocol/uai/extension/perft.cpp
     src/protocol/uai/extension/split.cpp
     src/search/search.cpp
-    src/search/alphabeta/alphabeta.cpp
-    src/search/alphabeta/eval.cpp
-    src/search/alphabeta/root.cpp
+    src/search/tryhard/search.cpp
+    src/search/tryhard/eval.cpp
+    src/search/tryhard/root.cpp
     src/search/mcts/eval.cpp
     src/search/mcts/root.cpp
     src/search/minimax/minimax.cpp

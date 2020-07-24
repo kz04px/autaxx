@@ -1,10 +1,10 @@
-#include "alphabeta.hpp"
 #include <array>
 #include <cassert>
 #include <chrono>
 #include "phase.hpp"
 #include "reduction.hpp"
 #include "sorter.hpp"
+#include "tryhard.hpp"
 
 constexpr std::array<int, 4> futility_margins = {800, 800, 1600, 1600};
 
@@ -12,13 +12,9 @@ using namespace std::chrono;
 
 namespace search {
 
-namespace alphabeta {
+namespace tryhard {
 
-int Alphabeta::alphabeta(Stack *stack,
-                         const libataxx::Position &pos,
-                         int alpha,
-                         int beta,
-                         int depth) {
+int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int beta, int depth) {
     assert(stack);
     assert(alpha < beta);
 
@@ -111,8 +107,7 @@ int Alphabeta::alphabeta(Stack *stack,
         npos.makemove(libataxx::Move::nullmove());
 
         (stack + 1)->nullmove = false;
-        const int score =
-            -alphabeta(stack + 1, npos, -beta, -beta + 1, depth - 3);
+        const int score = -search(stack + 1, npos, -beta, -beta + 1, depth - 3);
         (stack + 1)->nullmove = true;
 
         if (score >= beta) {
@@ -144,13 +139,12 @@ int Alphabeta::alphabeta(Stack *stack,
 
         int score = 0;
         if (i == 0) {
-            score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
+            score = -search(stack + 1, npos, -beta, -alpha, depth - 1);
         } else {
             const int r = reduction(npos, i, depth, pvnode);
-            score =
-                -alphabeta(stack + 1, npos, -alpha - 1, -alpha, depth - 1 - r);
+            score = -search(stack + 1, npos, -alpha - 1, -alpha, depth - 1 - r);
             if (score > alpha) {
-                score = -alphabeta(stack + 1, npos, -beta, -alpha, depth - 1);
+                score = -search(stack + 1, npos, -beta, -alpha, depth - 1);
             }
         }
 
@@ -160,9 +154,7 @@ int Alphabeta::alphabeta(Stack *stack,
             // Update PV
             stack->pv.clear();
             stack->pv.push_back(move);
-            stack->pv.insert(stack->pv.begin() + 1,
-                             (stack + 1)->pv.begin(),
-                             (stack + 1)->pv.end());
+            stack->pv.insert(stack->pv.begin() + 1, (stack + 1)->pv.begin(), (stack + 1)->pv.end());
 
             if (score > alpha) {
                 alpha = score;
@@ -203,6 +195,6 @@ int Alphabeta::alphabeta(Stack *stack,
     return alpha;
 }
 
-}  // namespace alphabeta
+}  // namespace tryhard
 
 }  // namespace search

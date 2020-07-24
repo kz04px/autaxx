@@ -1,11 +1,11 @@
 #include <libataxx/position.hpp>
 #include "../score.hpp"
-#include "alphabeta.hpp"
 #include "phase.hpp"
+#include "tryhard.hpp"
 
 namespace search {
 
-namespace alphabeta {
+namespace tryhard {
 
 // clang-format off
 constexpr Score pst[49] = {
@@ -61,7 +61,7 @@ constexpr Score hole_penalties[] = {
 }
 
 // Return the evaluation of the position from the side to move's point of view
-int Alphabeta::eval(const libataxx::Position &pos) noexcept {
+int Tryhard::eval(const libataxx::Position &pos) noexcept {
     const auto p = phase(pos);
     Score score;
 
@@ -74,6 +74,6 @@ int Alphabeta::eval(const libataxx::Position &pos) noexcept {
     return score.mg() * (1.0 - p) + score.eg() * p;
 }
 
-}  // namespace alphabeta
+}  // namespace tryhard
 
 }  // namespace search

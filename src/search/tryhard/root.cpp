@@ -1,18 +1,17 @@
 #include <array>
 #include <cassert>
 #include <iostream>
-#include "alphabeta.hpp"
+#include "tryhard.hpp"
 
 using namespace std::chrono;
 
 namespace search {
 
-namespace alphabeta {
+namespace tryhard {
 
 constexpr std::array<int, 4> bounds = {50, 200, 800, 10 * mate_score};
 
-void Alphabeta::root(const libataxx::Position pos,
-                     const Settings &settings) noexcept {
+void Tryhard::root(const libataxx::Position pos, const Settings &settings) noexcept {
     const auto t0 = steady_clock::now();
 
     // Clear
@@ -72,7 +71,7 @@ void Alphabeta::root(const libataxx::Position pos,
         // Aspiration windows
         int score = 0;
         if (i < 3) {
-            score = alphabeta(stack_, pos, -mate_score, mate_score, i);
+            score = search(stack_, pos, -mate_score, mate_score, i);
         } else {
             int idx_lower = 0;
             int idx_upper = 0;
@@ -84,7 +83,7 @@ void Alphabeta::root(const libataxx::Position pos,
 
                 assert(upper > lower);
 
-                score = alphabeta(stack_, pos, lower, upper, i);
+                score = search(stack_, pos, lower, upper, i);
 
                 if (score <= lower) {
                     idx_lower++;
@@ -101,9 +100,7 @@ void Alphabeta::root(const libataxx::Position pos,
 
         assert(-mate_score < score && score < mate_score);
 
-        if (i > 1 &&
-            (controller_.stop || stats_.nodes >= controller_.max_nodes ||
-             finish >= controller_.end_time)) {
+        if (i > 1 && (controller_.stop || stats_.nodes >= controller_.max_nodes || finish >= controller_.end_time)) {
             break;
         }
 
@@ -147,8 +144,7 @@ void Alphabeta::root(const libataxx::Position pos,
         total += stats_.cutoffs[i];
     }
     for (int i = 0; i < 10 && total; ++i) {
-        const auto percent =
-            100 * static_cast<float>(stats_.cutoffs[i]) / total;
+        const auto percent = 100 * static_cast<float>(stats_.cutoffs[i]) / total;
         std::cout << "info string";
         std::cout << " index " << i;
         std::cout << " cutoffs " << percent << "%";
@@ -167,6 +163,6 @@ void Alphabeta::root(const libataxx::Position pos,
     }
 }
 
-}  // namespace alphabeta
+}  // namespace tryhard
 
 }  // namespace search

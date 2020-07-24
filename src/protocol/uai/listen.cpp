@@ -1,12 +1,12 @@
 #include <iostream>
 #include <memory>
 #include "../../options.hpp"
-#include "../../search/alphabeta/alphabeta.hpp"
 #include "../../search/leastcaptures/leastcaptures.hpp"
 #include "../../search/mcts/mcts.hpp"
 #include "../../search/minimax/minimax.hpp"
 #include "../../search/mostcaptures/mostcaptures.hpp"
 #include "../../search/random/random.hpp"
+#include "../../search/tryhard/tryhard.hpp"
 #include "../protocol.hpp"
 #include "extension/display.hpp"
 #include "extension/perft.hpp"
@@ -31,9 +31,9 @@ void listen() {
     // Create options
     Options::checks["debug"] = Options::Check(false);
     Options::spins["hash"] = Options::Spin(1, 2048, 128);
-    Options::combos["search"] = Options::Combo("alphabeta",
+    Options::combos["search"] = Options::Combo("tryhard",
                                                {
-                                                   "alphabeta",
+                                                   "tryhard",
                                                    "mcts",
                                                    "minimax",
                                                    "mostcaptures",
@@ -69,9 +69,8 @@ void listen() {
         search_main = std::unique_ptr<Search>(new random::Random());
     } else if (Options::combos["search"].get() == "mostcaptures") {
         search_main = std::unique_ptr<Search>(new mostcaptures::MostCaptures());
-    } else if (Options::combos["search"].get() == "alphabeta") {
-        search_main = std::unique_ptr<Search>(
-            new alphabeta::Alphabeta(Options::spins["hash"].get()));
+    } else if (Options::combos["search"].get() == "tryhard") {
+        search_main = std::unique_ptr<Search>(new tryhard::Tryhard(Options::spins["hash"].get()));
     } else if (Options::combos["search"].get() == "mcts") {
         search_main = std::unique_ptr<Search>(new mcts::MCTS());
     } else if (Options::combos["search"].get() == "minimax") {
