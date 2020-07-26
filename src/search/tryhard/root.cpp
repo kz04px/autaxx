@@ -68,6 +68,8 @@ void Tryhard::root(const libataxx::Position pos, const Settings &settings) noexc
 
     // Iterative deepening
     for (int i = 1; i <= depth; ++i) {
+        const auto depth_start = steady_clock::now();
+
         // Aspiration windows
         int score = 0;
         if (i < 3) {
@@ -97,6 +99,7 @@ void Tryhard::root(const libataxx::Position pos, const Settings &settings) noexc
 
         const auto finish = steady_clock::now();
         const auto dt = duration_cast<milliseconds>(finish - start_time);
+        const auto dt_depth = duration_cast<milliseconds>(finish - depth_start);
 
         assert(-mate_score < score && score < mate_score);
 
@@ -136,6 +139,11 @@ void Tryhard::root(const libataxx::Position pos, const Settings &settings) noexc
             }
         }
         std::cout << std::endl;
+
+        // Try predict if we have enough time for another iteration
+        if (settings.type == Type::Time && finish + 2 * dt_depth >= controller_.end_time) {
+            break;
+        }
     }
 
 #ifndef NDEBUG
