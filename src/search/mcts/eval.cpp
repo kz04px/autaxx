@@ -41,7 +41,7 @@ constexpr Score hole_penalties[] = {
 
     // PST
     for (const auto &sq : us) {
-        score += pst[static_cast<int>(sq)];
+        score += pst[sq.index()];
     }
 
     // Holes

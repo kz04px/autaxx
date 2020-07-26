@@ -124,8 +124,8 @@ class Sorter {
             for (int i = num_moves_ - 1; i >= 0; --i) {
                 assert(moves_[i] != libataxx::Move::nullmove());
                 assert(moves_[i] != libataxx::Move::nomove());
-                assert(static_cast<int>(moves_[i].to()) < 49);
-                assert(static_cast<int>(moves_[i].from()) < 49);
+                assert(moves_[i].to().index() < 49);
+                assert(moves_[i].from().index() < 49);
                 assert(!pos_.count_captures(moves_[i]));
 
                 if (moves_[i] == ttmove_ || moves_[i] == killer_) {
@@ -136,9 +136,9 @@ class Sorter {
                 }
 
                 if (moves_[i].is_single()) {
-                    scores_[i] = pst[static_cast<int>(moves_[i].to())];
+                    scores_[i] = pst[moves_[i].to().index()];
                 } else {
-                    scores_[i] = pst[static_cast<int>(moves_[i].to())] - pst[static_cast<int>(moves_[i].from())];
+                    scores_[i] = pst[moves_[i].to().index()] - pst[moves_[i].from().index()];
                 }
             }
 
