@@ -57,6 +57,7 @@ add_executable(
 # Add the test executable
 add_executable(
     autaxx-test
+
     tests/main.cpp
     tests/uai-moves.cpp
     tests/uai-pos.cpp
@@ -66,17 +67,14 @@ add_executable(
     tests/options-spin.cpp
     tests/options-string.cpp
     tests/hashtable.cpp
-    tests/alphabeta_sorter.cpp
-    #tests/search-minimax.cpp
+    tests/tryhard_sorter.cpp
+
     src/options.cpp
     src/protocol/uai/moves.cpp
     src/protocol/uai/position.cpp
     src/protocol/uai/setoption.cpp
-    #src/search/alphabeta/alphabeta.cpp
-    #src/search/alphabeta/root.cpp
-    #src/search/minimax/minimax.cpp
-    #src/search/minimax/root.cpp
-    #src/search/random/root.cpp
+
+    src/search/tryhard/eval.cpp
 )
 
 set_property(TARGET autaxx-test PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE FALSE)

@@ -3,7 +3,7 @@
 #include <libataxx/move.hpp>
 #include <libataxx/position.hpp>
 #include <vector>
-#include "../src/search/alphabeta/sorter.hpp"
+#include "../src/search/tryhard/sorter.hpp"
 #include "../src/utils.hpp"
 
 std::uint64_t perft(const libataxx::Position &pos, const int depth) {
@@ -49,7 +49,7 @@ std::uint64_t perft(const libataxx::Position &pos, const int depth) {
         }
     }
 
-    auto sorter = search::alphabeta::Sorter{pos, ttmove, killer};
+    auto sorter = search::tryhard::Sorter{pos, ttmove, killer};
     libataxx::Move move;
     std::uint64_t nodes = 0;
 
@@ -57,8 +57,7 @@ std::uint64_t perft(const libataxx::Position &pos, const int depth) {
     const bool killer_legal = pos.legal_move(killer);
 
     const bool tt_first = tt_legal;
-    const bool killer_first =
-        (tt_first && ttmove == killer) || (!tt_first && killer_legal);
+    const bool killer_first = (tt_first && ttmove == killer) || (!tt_first && killer_legal);
     const bool killer_second = tt_first && killer_legal && ttmove != killer;
 
     int i = 0;
@@ -88,7 +87,7 @@ std::uint64_t perft(const libataxx::Position &pos, const int depth) {
     return nodes;
 }
 
-TEST_CASE("Alphabeta sorter") {
+TEST_CASE("Tryhard sorter") {
     const std::pair<std::string, std::vector<std::uint64_t>> tests[] = {
         {"7/7/7/7/7/7/7 x 0 1", {1, 0, 0, 0, 0}},
         {"7/7/7/7/7/7/7 o 0 1", {1, 0, 0, 0, 0}},
