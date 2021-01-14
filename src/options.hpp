@@ -69,8 +69,7 @@ struct String {
 struct Combo {
     Combo() {
     }
-    Combo(const std::string &d, const std::vector<std::string> &o)
-        : default_(d), options_(o) {
+    Combo(const std::string &d, const std::vector<std::string> &o) : default_(d), options_(o) {
         set(d);
     }
     void set(const std::string &n) {

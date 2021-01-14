@@ -25,8 +25,7 @@ void set(const std::string &name, const std::string &value) {
             checks[name].set(false);
         } else {
             if (checks["debug"].get()) {
-                std::cout << "info illegal check value \"" << name << "\""
-                          << std::endl;
+                std::cout << "info illegal check value \"" << name << "\"" << std::endl;
             }
         }
     }
@@ -39,8 +38,7 @@ void set(const std::string &name, const std::string &value) {
         combos[name].set(value);
     } else {
         if (checks["debug"].get()) {
-            std::cout << "info option \"" << name << "\" not found"
-                      << std::endl;
+            std::cout << "info option \"" << name << "\" not found" << std::endl;
         }
     }
 }
@@ -50,15 +48,13 @@ void print() {
     for (auto const &[key, entry] : spins) {
         std::cout << "option"
                   << " name " << key << " type spin"
-                  << " default " << entry.default_ << " min " << entry.min_
-                  << " max " << entry.max_ << std::endl;
+                  << " default " << entry.default_ << " min " << entry.min_ << " max " << entry.max_ << std::endl;
     }
     // Checks
     for (auto const &[key, entry] : checks) {
         std::cout << "option"
                   << " name " << key << " type check"
-                  << " default " << (entry.default_ ? "true" : "false")
-                  << std::endl;
+                  << " default " << (entry.default_ ? "true" : "false") << std::endl;
     }
     // Strings
     for (auto const &[key, entry] : strings) {
@@ -77,4 +73,5 @@ void print() {
         std::cout << std::endl;
     }
 }
+
 }  // namespace Options
