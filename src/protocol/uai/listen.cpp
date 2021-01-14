@@ -83,6 +83,11 @@ void listen() {
         search_main = std::unique_ptr<Search>(new leastcaptures::LeastCaptures());
     }
 
+    if (!search_main) {
+        std::cerr << "Failed to allocate search" << std::endl;
+        return;
+    }
+
     libataxx::Position pos;
     uainewgame(pos);
 
