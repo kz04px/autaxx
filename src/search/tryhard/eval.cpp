@@ -8,7 +8,7 @@ namespace search {
 namespace tryhard {
 
 // clang-format off
-constexpr Score pst[49] = {
+constexpr Score<int> pst[49] = {
     {60,90}, {40,60}, {20,40}, {20,40}, {20,40}, {40,60}, {60,90},
     {40,60}, {20,30}, {10,15}, {10,15}, {10,15}, {20,30}, {40,60},
     {20,40}, {10,15},   {0,0},   {0,0},   {0,0}, {10,15}, {20,40},
@@ -19,10 +19,10 @@ constexpr Score pst[49] = {
 };
 // clang-format on
 
-constexpr Score piece_value = {100, 100};
-constexpr Score surrounded = {15, 15};
-constexpr Score turn_bonus = {200, 200};
-constexpr Score hole_penalties[] = {
+constexpr Score<int> piece_value = {100, 100};
+constexpr Score<int> surrounded = {15, 15};
+constexpr Score<int> turn_bonus = {200, 200};
+constexpr Score<int> hole_penalties[] = {
     {0, 0},
     {0, 0},
     {-25, -25},
@@ -34,10 +34,10 @@ constexpr Score hole_penalties[] = {
     {-500, -500},
 };
 
-[[nodiscard]] constexpr Score eval_us(const libataxx::Bitboard &us,
-                                      const libataxx::Bitboard &them,
-                                      const libataxx::Bitboard &empty) {
-    Score score;
+[[nodiscard]] constexpr Score<int> eval_us(const libataxx::Bitboard &us,
+                                           const libataxx::Bitboard &them,
+                                           const libataxx::Bitboard &empty) {
+    Score<int> score;
 
     // Material
     score += piece_value * us.count();
@@ -63,7 +63,7 @@ constexpr Score hole_penalties[] = {
 // Return the evaluation of the position from the side to move's point of view
 int Tryhard::eval(const libataxx::Position &pos) noexcept {
     const auto p = phase(pos);
-    Score score;
+    Score<int> score;
 
     score += eval_us(pos.us(), pos.them(), pos.empty());
     score -= eval_us(pos.them(), pos.us(), pos.empty());

@@ -2,16 +2,14 @@
 #define SCORE_HPP
 
 #include <array>
-#include <libataxx/position.hpp>
 
+template <typename T>
 class Score {
    public:
-    using value_type = int;
-
     constexpr Score() : m_data{} {
     }
 
-    constexpr Score(const value_type mg, const value_type eg) : m_data{mg, eg} {
+    constexpr Score(const T mg, const T eg) : m_data{mg, eg} {
     }
 
     [[nodiscard]] constexpr Score operator+(const Score &rhs) const noexcept {
@@ -26,8 +24,14 @@ class Score {
         return {-m_data[0], -m_data[1]};
     }
 
-    [[nodiscard]] constexpr Score operator*(const value_type n) const noexcept {
-        return {m_data[0] * n, m_data[1] * n};
+    template <typename B>
+    [[nodiscard]] constexpr Score operator*(const B n) const noexcept {
+        return {static_cast<T>(m_data[0] * n), static_cast<T>(m_data[1] * n)};
+    }
+
+    template <typename B>
+    [[nodiscard]] constexpr Score operator/(const B n) const noexcept {
+        return {static_cast<T>(m_data[0] / n), static_cast<T>(m_data[1] / n)};
     }
 
     constexpr Score operator+=(const Score &rhs) noexcept {
@@ -50,30 +54,61 @@ class Score {
         return m_data[0] != rhs.m_data[0] || m_data[1] != rhs.m_data[1];
     }
 
-    [[nodiscard]] constexpr value_type average() const noexcept {
+    [[nodiscard]] constexpr T average() const noexcept {
         return (mg() + eg()) / 2;
     }
 
-    [[nodiscard]] constexpr value_type mg() const noexcept {
+    [[nodiscard]] constexpr T mg() const noexcept {
         return m_data[0];
     }
 
-    [[nodiscard]] constexpr value_type eg() const noexcept {
+    [[nodiscard]] constexpr T eg() const noexcept {
         return m_data[1];
     }
 
+    [[nodiscard]] auto begin() noexcept {
+        return m_data.begin();
+    }
+
+    [[nodiscard]] auto end() noexcept {
+        return m_data.end();
+    }
+
+    [[nodiscard]] auto begin() const noexcept {
+        return m_data.begin();
+    }
+
+    [[nodiscard]] auto end() const noexcept {
+        return m_data.end();
+    }
+
    private:
-    std::array<value_type, 2> m_data;
+    std::array<T, 2> m_data;
 };
 
-static_assert(sizeof(Score) == 2 * sizeof(int));
-static_assert(Score{} == Score{0, 0});
-static_assert(Score{} != Score{1, 0});
-static_assert(Score{} != Score{0, 1});
-static_assert(Score{1, 2}.mg() == 1);
-static_assert(Score{1, 2}.eg() == 2);
-static_assert(Score{1, 2} + Score{3, 4} == Score{4, 6});
-static_assert(Score{1, 2} * 2 == Score{2, 4});
-static_assert(-Score{1, 2} == Score{-1, -2});
+template <typename T>
+inline std::ostream &operator<<(std::ostream &os, const Score<T> &s) noexcept {
+    os << s.mg() << "," << s.eg();
+    return os;
+}
+
+static_assert(sizeof(Score<int>) == 2 * sizeof(int));
+static_assert(Score<int>{} == Score<int>{0, 0});
+static_assert(Score<int>{} != Score<int>{1, 0});
+static_assert(Score<int>{} != Score<int>{0, 1});
+static_assert(Score<int>{1, 2}.mg() == 1);
+static_assert(Score<int>{1, 2}.eg() == 2);
+static_assert(Score<int>{1, 2} + Score<int>{3, 4} == Score<int>{4, 6});
+static_assert(Score<int>{1, 2} - Score<int>{3, 4} == Score<int>{-2, -2});
+static_assert(-Score<int>{1, 2} == Score<int>{-1, -2});
+static_assert(Score<int>{2, 4} * 2 == Score<int>{4, 8});
+static_assert(Score<int>{2, 4} / 2 == Score<int>{1, 2});
+
+static_assert(sizeof(Score<float>) == 2 * sizeof(float));
+static_assert(Score<float>{} == Score<float>{0.0f, 0.0f});
+static_assert(Score<float>{} != Score<float>{1.0f, 0.0f});
+static_assert(Score<float>{} != Score<float>{0.0f, 1.0f});
+static_assert(Score<float>{1.0f, 2.0f}.mg() == 1.0f);
+static_assert(Score<float>{1.0f, 2.0f}.eg() == 2.0f);
 
 #endif
