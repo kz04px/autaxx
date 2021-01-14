@@ -45,6 +45,11 @@ class TT {
         return 1000 * (static_cast<double>(filled_) / max_entries_);
     }
 
+    void prefetch(const std::uint64_t hash) const noexcept {
+        const auto idx = index(hash);
+        __builtin_prefetch(&entries_[idx]);
+    }
+
    private:
     [[nodiscard]] std::size_t index(const std::uint64_t hash) const noexcept {
         return hash % max_entries_;
