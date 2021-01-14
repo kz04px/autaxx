@@ -80,8 +80,7 @@ void listen() {
     } else if (Options::combos["search"].get() == "alphabeta") {
         search_main = std::unique_ptr<Search>(new alphabeta::Alphabeta());
     } else if (Options::combos["search"].get() == "leastcaptures") {
-        search_main =
-            std::unique_ptr<Search>(new leastcaptures::LeastCaptures());
+        search_main = std::unique_ptr<Search>(new leastcaptures::LeastCaptures());
     }
 
     libataxx::Position pos;
