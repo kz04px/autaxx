@@ -126,8 +126,7 @@ void listen() {
             break;
         } else {
             if (Options::checks["debug"].get()) {
-                std::cout << "info unknown UAI command \"" << word << "\""
-                          << std::endl;
+                std::cout << "info unknown UAI command \"" << word << "\"" << std::endl;
             }
         }
     }
