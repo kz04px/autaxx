@@ -118,6 +118,8 @@ void listen() {
             stop();
         } else if (word == "print") {
             Extension::display(pos);
+            std::cout << pos.get_fen() << std::endl;
+            std::cout << pos.hash() << std::endl;
         } else if (word == "display") {
             Extension::display(pos);
         } else if (word == "quit") {
