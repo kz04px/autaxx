@@ -6,6 +6,7 @@
 #include "../../search/mcts/mcts.hpp"
 #include "../../search/minimax/minimax.hpp"
 #include "../../search/mostcaptures/mostcaptures.hpp"
+#include "../../search/nnue/nnue.hpp"
 #include "../../search/random/random.hpp"
 #include "../../search/tryhard/tryhard.hpp"
 #include "../protocol.hpp"
@@ -32,6 +33,7 @@ void listen() {
     // Create options
     Options::checks["debug"] = Options::Check(false);
     Options::spins["hash"] = Options::Spin(1, 2048, 128);
+    Options::strings["nnue-path"] = Options::String("./weights.nnue");
     Options::combos["search"] = Options::Combo("tryhard",
                                                {
                                                    "tryhard",
@@ -40,6 +42,7 @@ void listen() {
                                                    "mostcaptures",
                                                    "random",
                                                    "leastcaptures",
+                                                   "nnue",
                                                    "alphabeta",
                                                });
 
@@ -81,6 +84,16 @@ void listen() {
         search_main = std::unique_ptr<Search>(new alphabeta::Alphabeta());
     } else if (Options::combos["search"].get() == "leastcaptures") {
         search_main = std::unique_ptr<Search>(new leastcaptures::LeastCaptures());
+    } else if (Options::combos["search"].get() == "nnue") {
+        // Check weight file exists
+        std::ifstream f(Options::strings["nnue-path"].get().c_str());
+        if (!f.good()) {
+            std::cerr << "NNUE weight file could not be eccessed";
+            return;
+        }
+
+        search_main =
+            std::unique_ptr<Search>(new nnue::NNUE(Options::strings["nnue-path"].get(), Options::spins["hash"].get()));
     }
 
     if (!search_main) {

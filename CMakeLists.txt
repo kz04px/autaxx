@@ -41,11 +41,18 @@ add_executable(
     src/protocol/uai/extension/perft.cpp
     src/protocol/uai/extension/split.cpp
     src/search/search.cpp
+
     src/search/tryhard/search.cpp
     src/search/tryhard/eval.cpp
     src/search/tryhard/root.cpp
+
+    src/search/nnue/search.cpp
+    src/search/nnue/eval.cpp
+    src/search/nnue/root.cpp
+
     src/search/mcts/eval.cpp
     src/search/mcts/root.cpp
+
     src/search/minimax/minimax.cpp
     src/search/minimax/eval.cpp
     src/search/minimax/root.cpp
