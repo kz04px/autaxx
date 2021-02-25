@@ -11,6 +11,7 @@ include_directories(.)
 
 # Third party includes
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/libataxx/src/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/libnnue/src/)
 
 # Flags
 set(CMAKE_CXX_STANDARD 17)
