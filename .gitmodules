@@ -1,3 +1,6 @@
 [submodule "libs/libataxx"]
 	path = libs/libataxx
 	url = https://www.github.com/kz04px/libataxx
+[submodule "libs/libnnue"]
+	path = libs/libnnue
+	url = https://www.github.com/kz04px/libnnue
