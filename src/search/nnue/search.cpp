@@ -33,8 +33,7 @@ int NNUE::search(Stack *stack, const libataxx::Position &pos, int alpha, int bet
     stats_.seldepth = std::max(stack->ply, stats_.seldepth);
 
     // Return mate or draw scores if the game is over
-    const auto r = pos.result();
-    if (r != libataxx::Result::None) {
+    if (const auto r = pos.result(); r != libataxx::Result::None) {
         if (r == libataxx::Result::Draw) {
             return 0;
         } else if (r == libataxx::Result::BlackWin) {
