@@ -13,7 +13,7 @@ namespace mostcaptures {
 
 class MostCaptures : public Search {
    public:
-    void go(const libataxx::Position pos, const Settings &settings) override {
+    void go(const libataxx::Position pos, [[maybe_unused]] const Settings &settings) override {
         libataxx::Move moves[libataxx::max_moves];
         const int num_moves = pos.legal_moves(moves);
 
