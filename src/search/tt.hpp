@@ -38,7 +38,9 @@ class TT {
 
     void clear() noexcept {
         filled_ = 0;
-        std::memset(entries_, 0, max_entries_ * sizeof(T));
+        for (std::size_t i = 0; i < max_entries_; ++i) {
+            entries_[i] = T();
+        }
     }
 
     [[nodiscard]] int hashfull() const noexcept {
