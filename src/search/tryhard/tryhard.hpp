@@ -9,9 +9,7 @@
 #include "../tt.hpp"
 #include "ttentry.hpp"
 
-namespace search {
-
-namespace tryhard {
+namespace search::tryhard {
 
 constexpr int mate_score = 10000;
 constexpr int max_depth = 128;
@@ -74,8 +72,6 @@ class Tryhard : public Search {
     TT<TTEntry> tt_;
 };
 
-}  // namespace tryhard
-
-}  // namespace search
+}  // namespace search::tryhard
 
 #endif

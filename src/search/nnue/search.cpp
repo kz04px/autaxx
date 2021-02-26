@@ -12,9 +12,7 @@ constexpr std::array<int, 4> futility_margins = {800, 800, 1600, 1600};
 
 using namespace std::chrono;
 
-namespace search {
-
-namespace nnue {
+namespace search::nnue {
 
 int NNUE::search(Stack *stack, const libataxx::Position &pos, int alpha, int beta, int depth) {
     assert(stack);
@@ -205,6 +203,4 @@ int NNUE::search(Stack *stack, const libataxx::Position &pos, int alpha, int bet
     return alpha;
 }
 
-}  // namespace nnue
-
-}  // namespace search
+}  // namespace search::nnue

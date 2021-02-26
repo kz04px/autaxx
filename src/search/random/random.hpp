@@ -7,9 +7,7 @@
 #include "../../utils.hpp"
 #include "../search.hpp"
 
-namespace search {
-
-namespace random {
+namespace search::random {
 
 class Random : public Search {
    public:
@@ -29,8 +27,6 @@ class Random : public Search {
    private:
 };
 
-}  // namespace random
-
-}  // namespace search
+}  // namespace search::random
 
 #endif

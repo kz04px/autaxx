@@ -4,9 +4,7 @@
 #include <libataxx/move.hpp>
 #include <sstream>
 
-namespace UAI {
-
-namespace Extension {
+namespace UAI::Extension {
 
 // Perform a split perft
 void split(const libataxx::Position &pos, std::stringstream &stream) {
@@ -32,6 +30,4 @@ void split(const libataxx::Position &pos, std::stringstream &stream) {
     std::cout << "nodes " << total_nodes << std::endl;
 }
 
-}  // namespace Extension
-
-}  // namespace UAI
+}  // namespace UAI::Extension

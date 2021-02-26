@@ -4,9 +4,7 @@
 
 using namespace std::chrono;
 
-namespace search {
-
-namespace minimax {
+namespace search::minimax {
 
 int Minimax::minimax(Stack *stack, const libataxx::Position &pos, int depth) {
     assert(stack);
@@ -76,6 +74,4 @@ int Minimax::minimax(Stack *stack, const libataxx::Position &pos, int depth) {
     return best_score;
 }
 
-}  // namespace minimax
-
-}  // namespace search
+}  // namespace search::minimax

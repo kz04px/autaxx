@@ -10,9 +10,7 @@
 #include "network.hpp"
 #include "ttentry.hpp"
 
-namespace search {
-
-namespace nnue {
+namespace search::nnue {
 
 constexpr int mate_score = 10000;
 constexpr int max_depth = 128;
@@ -81,8 +79,6 @@ class NNUE : public Search {
     TT<TTEntry> tt_;
 };
 
-}  // namespace nnue
-
-}  // namespace search
+}  // namespace search::nnue
 
 #endif

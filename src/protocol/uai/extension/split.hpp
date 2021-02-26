@@ -3,15 +3,11 @@
 
 #include <libataxx/position.hpp>
 
-namespace UAI {
-
-namespace Extension {
+namespace UAI::Extension {
 
 // Perform a split perft search
 void split(const libataxx::Position &pos, std::stringstream &stream);
 
-}  // namespace Extension
-
-}  // namespace UAI
+}  // namespace UAI::Extension
 
 #endif

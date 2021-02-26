@@ -4,9 +4,7 @@
 
 using namespace std::chrono;
 
-namespace search {
-
-namespace minimax {
+namespace search::minimax {
 
 void Minimax::root(const libataxx::Position pos,
                    const Settings &settings) noexcept {
@@ -104,6 +102,4 @@ void Minimax::root(const libataxx::Position pos,
     }
 }
 
-}  // namespace minimax
-
-}  // namespace search
+}  // namespace search::minimax

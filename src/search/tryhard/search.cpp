@@ -10,9 +10,7 @@ constexpr std::array<int, 4> futility_margins = {800, 800, 1600, 1600};
 
 using namespace std::chrono;
 
-namespace search {
-
-namespace tryhard {
+namespace search::tryhard {
 
 int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int beta, int depth) {
     assert(stack);
@@ -194,6 +192,4 @@ int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int 
     return alpha;
 }
 
-}  // namespace tryhard
-
-}  // namespace search
+}  // namespace search::tryhard

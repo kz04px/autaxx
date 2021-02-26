@@ -1,9 +1,7 @@
 #include <libataxx/position.hpp>
 #include "minimax.hpp"
 
-namespace search {
-
-namespace minimax {
+namespace search::minimax {
 
 // Return the evaluation of the position from the side to move's point of view
 int Minimax::eval(const libataxx::Position &pos) noexcept {
@@ -12,6 +10,4 @@ int Minimax::eval(const libataxx::Position &pos) noexcept {
     return 100 * (num_us - num_them);
 }
 
-}  // namespace minimax
-
-}  // namespace search
+}  // namespace search::minimax

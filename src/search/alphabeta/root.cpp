@@ -4,9 +4,7 @@
 
 using namespace std::chrono;
 
-namespace search {
-
-namespace alphabeta {
+namespace search::alphabeta {
 
 void Alphabeta::root(const libataxx::Position pos, const Settings &settings) noexcept {
     // Clear
@@ -102,6 +100,4 @@ void Alphabeta::root(const libataxx::Position pos, const Settings &settings) noe
     }
 }
 
-}  // namespace alphabeta
-
-}  // namespace search
+}  // namespace search::alphabeta

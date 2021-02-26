@@ -1,9 +1,7 @@
 #include <libataxx/position.hpp>
 #include "alphabeta.hpp"
 
-namespace search {
-
-namespace alphabeta {
+namespace search::alphabeta {
 
 // Return the evaluation of the position from the side to move's point of view
 int Alphabeta::eval(const libataxx::Position &pos) noexcept {
@@ -12,6 +10,4 @@ int Alphabeta::eval(const libataxx::Position &pos) noexcept {
     return 100 * (num_us - num_them);
 }
 
-}  // namespace alphabeta
-
-}  // namespace search
+}  // namespace search::alphabeta

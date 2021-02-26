@@ -4,15 +4,11 @@
 #include <libataxx/position.hpp>
 #include <sstream>
 
-namespace UAI {
-
-namespace Extension {
+namespace UAI::Extension {
 
 // Perform a perft search
 void perft(const libataxx::Position &pos, std::stringstream &stream);
 
-}  // namespace Extension
-
-}  // namespace UAI
+}  // namespace UAI::Extension
 
 #endif
