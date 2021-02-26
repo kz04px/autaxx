@@ -3,9 +3,7 @@
 #include "nnue.hpp"
 #include "phase.hpp"
 
-namespace search {
-
-namespace nnue {
+namespace search::nnue {
 
 // Return the evaluation of the position from the side to move's point of view
 int NNUE::eval() const noexcept {
@@ -17,6 +15,4 @@ int NNUE::eval(const libataxx::Position &pos) const noexcept {
     return static_cast<int>(600.0f * m_network.run(pos));
 }
 
-}  // namespace nnue
-
-}  // namespace search
+}  // namespace search::nnue

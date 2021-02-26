@@ -4,9 +4,7 @@
 #include <libataxx/position.hpp>
 #include "../search.hpp"
 
-namespace search {
-
-namespace mcts {
+namespace search::mcts {
 
 class MCTS : public Search {
    public:
@@ -19,8 +17,6 @@ class MCTS : public Search {
     void root(const libataxx::Position pos, const Settings &settings) noexcept;
 };
 
-}  // namespace mcts
-
-}  // namespace search
+}  // namespace search::mcts
 
 #endif

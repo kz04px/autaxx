@@ -8,9 +8,7 @@
 #include "../../utils.hpp"
 #include "../search.hpp"
 
-namespace search {
-
-namespace leastcaptures {
+namespace search::leastcaptures {
 
 class LeastCaptures : public Search {
    public:
@@ -58,8 +56,6 @@ class LeastCaptures : public Search {
    private:
 };
 
-}  // namespace leastcaptures
-
-}  // namespace search
+}  // namespace search::leastcaptures
 
 #endif

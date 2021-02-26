@@ -2,9 +2,7 @@
 #include <chrono>
 #include <iostream>
 
-namespace UAI {
-
-namespace Extension {
+namespace UAI::Extension {
 
 // Perform a perft search
 void perft(const libataxx::Position &pos, std::stringstream &stream) {
@@ -30,6 +28,4 @@ void perft(const libataxx::Position &pos, std::stringstream &stream) {
     std::cout << "nodes " << nodes << std::endl;
 }
 
-}  // namespace Extension
-
-}  // namespace UAI
+}  // namespace UAI::Extension

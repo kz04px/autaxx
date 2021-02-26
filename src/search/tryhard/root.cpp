@@ -5,9 +5,7 @@
 
 using namespace std::chrono;
 
-namespace search {
-
-namespace tryhard {
+namespace search::tryhard {
 
 constexpr std::array<int, 4> bounds = {50, 200, 800, 10 * mate_score};
 
@@ -171,6 +169,4 @@ void Tryhard::root(const libataxx::Position pos, const Settings &settings) noexc
     }
 }
 
-}  // namespace tryhard
-
-}  // namespace search
+}  // namespace search::tryhard

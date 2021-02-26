@@ -4,9 +4,7 @@
 #include <cassert>
 #include <libataxx/position.hpp>
 
-namespace search {
-
-namespace tryhard {
+namespace search::tryhard {
 
 int reduction(const libataxx::Position &npos, const int move_num, const int depth, const bool pvnode) {
     assert(depth >= 0);
@@ -21,8 +19,6 @@ int reduction(const libataxx::Position &npos, const int move_num, const int dept
     return 4;
 }
 
-}  // namespace tryhard
-
-}  // namespace search
+}  // namespace search::tryhard
 
 #endif

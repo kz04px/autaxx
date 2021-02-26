@@ -6,9 +6,7 @@
 
 using namespace std::chrono;
 
-namespace search {
-
-namespace nnue {
+namespace search::nnue {
 
 constexpr std::array<int, 4> bounds = {50, 200, 800, 10 * mate_score};
 
@@ -177,6 +175,4 @@ void NNUE::root(const libataxx::Position pos, const Settings &settings) noexcept
     }
 }
 
-}  // namespace nnue
-
-}  // namespace search
+}  // namespace search::nnue

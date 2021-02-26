@@ -7,9 +7,7 @@
 #include "../pv.hpp"
 #include "../search.hpp"
 
-namespace search {
-
-namespace alphabeta {
+namespace search::alphabeta {
 
 constexpr int mate_score = 10000;
 constexpr int max_depth = 128;
@@ -36,8 +34,6 @@ class Alphabeta : public Search {
     Stack stack_[max_depth + 1];
 };
 
-}  // namespace alphabeta
-
-}  // namespace search
+}  // namespace search::alphabeta
 
 #endif

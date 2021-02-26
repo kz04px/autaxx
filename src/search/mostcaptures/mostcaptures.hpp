@@ -7,9 +7,7 @@
 #include "../../utils.hpp"
 #include "../search.hpp"
 
-namespace search {
-
-namespace mostcaptures {
+namespace search::mostcaptures {
 
 class MostCaptures : public Search {
    public:
@@ -57,8 +55,6 @@ class MostCaptures : public Search {
    private:
 };
 
-}  // namespace mostcaptures
-
-}  // namespace search
+}  // namespace search::mostcaptures
 
 #endif

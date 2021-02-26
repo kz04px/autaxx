@@ -7,9 +7,7 @@
 #include "../pv.hpp"
 #include "../search.hpp"
 
-namespace search {
-
-namespace minimax {
+namespace search::minimax {
 
 constexpr int mate_score = 10000;
 constexpr int max_depth = 128;
@@ -38,8 +36,6 @@ class Minimax : public Search {
     Stack stack_[max_depth + 1];
 };
 
-}  // namespace minimax
-
-}  // namespace search
+}  // namespace search::minimax
 
 #endif

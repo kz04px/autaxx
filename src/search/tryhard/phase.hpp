@@ -3,9 +3,7 @@
 
 #include <libataxx/position.hpp>
 
-namespace search {
-
-namespace tryhard {
+namespace search::tryhard {
 
 constexpr float phase(const libataxx::Position &pos) {
     const int both = (pos.us() | pos.them()).count();
@@ -13,8 +11,6 @@ constexpr float phase(const libataxx::Position &pos) {
     return static_cast<float>(both) / all;
 }
 
-}  // namespace tryhard
-
-}  // namespace search
+}  // namespace search::tryhard
 
 #endif

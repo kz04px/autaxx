@@ -3,9 +3,7 @@
 #include "phase.hpp"
 #include "tryhard.hpp"
 
-namespace search {
-
-namespace tryhard {
+namespace search::tryhard {
 
 // clang-format off
 constexpr Score<int> pst[49] = {
@@ -74,6 +72,4 @@ int Tryhard::eval(const libataxx::Position &pos) noexcept {
     return score.mg() * (1.0 - p) + score.eg() * p;
 }
 
-}  // namespace tryhard
-
-}  // namespace search
+}  // namespace search::tryhard

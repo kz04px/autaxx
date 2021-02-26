@@ -4,9 +4,7 @@
 #include <libataxx/move.hpp>
 #include <libataxx/position.hpp>
 
-namespace search {
-
-namespace tryhard {
+namespace search::tryhard {
 
 // clang-format off
 constexpr int pst[49] = {
@@ -158,8 +156,6 @@ class Sorter {
     Stage stage_;
 };
 
-}  // namespace tryhard
-
-}  // namespace search
+}  // namespace search::tryhard
 
 #endif

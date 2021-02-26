@@ -4,9 +4,7 @@
 
 using namespace std::chrono;
 
-namespace search {
-
-namespace alphabeta {
+namespace search::alphabeta {
 
 int Alphabeta::search(Stack *stack, const libataxx::Position &pos, int alpha, const int beta, int depth) {
     assert(stack);
@@ -79,6 +77,4 @@ int Alphabeta::search(Stack *stack, const libataxx::Position &pos, int alpha, co
     return best_score;
 }
 
-}  // namespace alphabeta
-
-}  // namespace search
+}  // namespace search::alphabeta

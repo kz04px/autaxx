@@ -3,15 +3,11 @@
 
 #include <libataxx/position.hpp>
 
-namespace UAI {
-
-namespace Extension {
+namespace UAI::Extension {
 
 // Display the board
 void display(const libataxx::Position &pos);
 
-}  // namespace Extension
-
-}  // namespace UAI
+}  // namespace UAI::Extension
 
 #endif
