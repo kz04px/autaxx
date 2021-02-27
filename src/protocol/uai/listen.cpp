@@ -88,7 +88,7 @@ void listen() {
         // Check weight file exists
         std::ifstream f(Options::strings["nnue-path"].get().c_str());
         if (!f.good()) {
-            std::cerr << "NNUE weight file could not be eccessed";
+            std::cerr << "NNUE weight file could not be accessed\n";
             return;
         }
 
