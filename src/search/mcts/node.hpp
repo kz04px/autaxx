@@ -26,9 +26,7 @@ class Node {
         calculate_probabilities(pos);
     }
 
-    Node(Node *parent,
-         const libataxx::Position &pos,
-         const libataxx::Move &move)
+    Node(Node *parent, const libataxx::Position &pos, const libataxx::Move &move)
         : parent_{parent},
           move_{move},
           reward_{0.0},
@@ -75,8 +73,7 @@ class Node {
         return parent() != nullptr;
     }
 
-    [[nodiscard]] auto child_score(const std::size_t idx, const float c) const
-        noexcept {
+    [[nodiscard]] auto child_score(const std::size_t idx, const float c) const noexcept {
         assert(idx < num_children());
 
         const auto &child = children_[idx];
@@ -86,8 +83,7 @@ class Node {
         }
 
         const float q = child.reward() / child.visits();
-        const float u = c * probabilities_[idx] * std::sqrt(visits() - 1) /
-                        (child.visits() + 1);
+        const float u = c * probabilities_[idx] * std::sqrt(visits() - 1) / (child.visits() + 1);
         return q + u;
     }
 
@@ -153,8 +149,7 @@ class Node {
         return &children_.back();
     }
 
-    [[nodiscard]] std::vector<libataxx::Move> get_pv(
-        const int max_length = 8) const noexcept {
+    [[nodiscard]] std::vector<libataxx::Move> get_pv(const int max_length = 8) const noexcept {
         std::vector<libataxx::Move> moves;
         const Node *n = this;
         while (n->expanded()) {

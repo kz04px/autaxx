@@ -29,9 +29,7 @@ class Minimax : public Search {
 
     [[nodiscard]] static int eval(const libataxx::Position &pos) noexcept;
 
-    [[nodiscard]] int minimax(Stack *stack,
-                              const libataxx::Position &pos,
-                              int depth);
+    [[nodiscard]] int minimax(Stack *stack, const libataxx::Position &pos, int depth);
 
     Stack stack_[max_depth + 1];
 };

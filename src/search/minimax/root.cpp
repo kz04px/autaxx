@@ -6,8 +6,7 @@ using namespace std::chrono;
 
 namespace search::minimax {
 
-void Minimax::root(const libataxx::Position pos,
-                   const Settings &settings) noexcept {
+void Minimax::root(const libataxx::Position pos, const Settings &settings) noexcept {
     // Clear
     stats_.clear();
     for (int i = 0; i < max_depth + 1; ++i) {
@@ -65,9 +64,8 @@ void Minimax::root(const libataxx::Position pos,
 
         assert(-mate_score < score && score < mate_score);
 
-        if (i > 1 &&
-            (controller_.stop || stats_.nodes >= controller_.max_nodes ||
-             steady_clock::now() >= controller_.end_time)) {
+        if (i > 1 && (controller_.stop || stats_.nodes >= controller_.max_nodes ||
+                      steady_clock::now() >= controller_.end_time)) {
             break;
         }
 

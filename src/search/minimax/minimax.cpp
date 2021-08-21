@@ -63,9 +63,7 @@ int Minimax::minimax(Stack *stack, const libataxx::Position &pos, int depth) {
             // Update PV
             stack->pv.clear();
             stack->pv.push_back(moves[i]);
-            stack->pv.insert(stack->pv.begin() + 1,
-                             (stack + 1)->pv.begin(),
-                             (stack + 1)->pv.end());
+            stack->pv.insert(stack->pv.begin() + 1, (stack + 1)->pv.begin(), (stack + 1)->pv.end());
 
             best_score = score;
         }

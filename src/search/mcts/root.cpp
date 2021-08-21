@@ -66,8 +66,7 @@ void backup_negamax(Node *n, float delta) {
     }
 }
 
-bool legal_pv(const libataxx::Position &pos,
-              const std::vector<libataxx::Move> &moves) {
+bool legal_pv(const libataxx::Position &pos, const std::vector<libataxx::Move> &moves) {
     auto npos = pos;
     int ply = 0;
     for (const auto &move : moves) {
@@ -153,8 +152,7 @@ bool verify(const Node *n) {
 
         // Winrate
         const float winrate = n->reward() / n->visits();
-        if ((0.001 <= winrate && winrate <= 0.499) ||
-            (0.501 <= winrate && winrate <= 0.999)) {
+        if ((0.001 <= winrate && winrate <= 0.499) || (0.501 <= winrate && winrate <= 0.999)) {
             std::cout << "Terminal - Winrate" << std::endl;
             return false;
         }
@@ -195,8 +193,7 @@ bool verify(const Node *n) {
     return true;
 }
 
-void MCTS::root(const libataxx::Position pos,
-                const Settings &settings) noexcept {
+void MCTS::root(const libataxx::Position pos, const Settings &settings) noexcept {
     const auto start_time = steady_clock::now();
     controller_.max_nodes = std::numeric_limits<std::uint64_t>::max();
     controller_.end_time = start_time + hours(1);
@@ -267,8 +264,7 @@ void MCTS::root(const libataxx::Position pos,
             break;
         }
 
-        if (stats_.nodes % 1024 == 0 &&
-            steady_clock::now() > controller_.end_time) {
+        if (stats_.nodes % 1024 == 0 && steady_clock::now() > controller_.end_time) {
             break;
         }
     }
