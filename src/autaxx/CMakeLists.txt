@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.12)
 # Project
 project(Autaxx VERSION 1.0 LANGUAGES CXX)
 
-# Base directory relative includes
-include_directories(.)
+# Packages
+find_package(Threads REQUIRED)
 
 # Third party includes
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libataxx/src/)
@@ -12,7 +12,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libnnue/src/)
 
 # Flags
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "-pthread -Wall -Wextra -Wshadow")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wshadow")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native -DNDEBUG")
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
@@ -60,4 +60,4 @@ add_executable(
     search/alphabeta/root.cpp
 )
 
-target_link_libraries(autaxx "${CMAKE_CURRENT_LIST_DIR}/../libataxx/build/static/libataxx.a")
+target_link_libraries(autaxx Threads::Threads "${CMAKE_CURRENT_LIST_DIR}/../libataxx/build/static/libataxx.a")
