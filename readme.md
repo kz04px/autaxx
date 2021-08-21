@@ -15,7 +15,7 @@ git clone --recurse-submodules https://github.com/kz04px/autaxx
 follow the libataxx build instructions
 mkdir ./autaxx/build
 cd ./autaxx/build
-cmake ..
+cmake ../src
 make
 ```
 
