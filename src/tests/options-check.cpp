@@ -1,5 +1,5 @@
 #include <catch2/catch.hpp>
-#include "../src/options.hpp"
+#include "../autaxx/options.hpp"
 
 TEST_CASE("Options::checks()") {
     Options::checks["TestCheck"] = Options::Check(false);

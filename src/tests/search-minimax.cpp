@@ -2,7 +2,7 @@
 #include <chrono>
 #include <libataxx/move.hpp>
 #include <libataxx/position.hpp>
-#include "../src/search/minimax/minimax.hpp"
+#include "../autaxx/search/minimax/minimax.hpp"
 
 #define MAX_DEPTH 128
 #define MATE_SCORE 100000
@@ -31,8 +31,7 @@ TEST_CASE("search::minimax() -- Mate in 1") {
 
     for (const auto& [fen, movestr] : tests) {
         const libataxx::Position pos{fen};
-        const int score =
-            search::minimax::minimax(controller, stats, stack, pos, 3);
+        const int score = search::minimax::minimax(controller, stats, stack, pos, 3);
         REQUIRE(score == MATE_SCORE - 1);
         REQUIRE(stats.seldepth == 3);
         REQUIRE(stats.nodes > 0);

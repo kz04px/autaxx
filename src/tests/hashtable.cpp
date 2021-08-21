@@ -3,7 +3,7 @@
 #include <libataxx/move.hpp>
 #include <libataxx/position.hpp>
 #include <string>
-#include "../src/search/tt.hpp"
+#include "../autaxx/search/tt.hpp"
 
 struct Entry {
     std::uint64_t hash;

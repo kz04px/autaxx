@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
-#include "../src/options.hpp"
-#include "../src/protocol/uai/setoption.hpp"
+#include "../autaxx/options.hpp"
+#include "../autaxx/protocol/uai/setoption.hpp"
 
 TEST_CASE("Options::spin()") {
     Options::strings["Test Name"] = Options::String("Replace");

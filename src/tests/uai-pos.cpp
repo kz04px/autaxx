@@ -2,7 +2,7 @@
 #include <libataxx/position.hpp>
 #include <sstream>
 #include <string>
-#include "../src/protocol/uai/position.hpp"
+#include "../autaxx/protocol/uai/position.hpp"
 
 TEST_CASE("UAI::pos()") {
     const std::pair<std::string, std::string> tests[] = {
@@ -13,8 +13,7 @@ TEST_CASE("UAI::pos()") {
         {"fen x5o/7/2-1-2/7/2-1-2/7/o5x o", "x5o/7/2-1-2/7/2-1-2/7/o5x o 0 1"},
         {"fen x5o/7/2-1-2/7/2-1-2/7/o5x x", "x5o/7/2-1-2/7/2-1-2/7/o5x x 0 1"},
         {"fen x5o/7/2-1-2/7/2-1-2/7/o5x o", "x5o/7/2-1-2/7/2-1-2/7/o5x o 0 1"},
-        {"fen x5o/7/2-1-2/7/2-1-2/7/o5x moves g2",
-         "x5o/7/2-1-2/7/2-1-2/6x/o5x o 0 1"},
+        {"fen x5o/7/2-1-2/7/2-1-2/7/o5x moves g2", "x5o/7/2-1-2/7/2-1-2/6x/o5x o 0 1"},
     };
     for (const auto& [input, fen] : tests) {
         libataxx::Position pos{"startpos"};

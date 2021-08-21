@@ -3,8 +3,8 @@
 #include <libataxx/move.hpp>
 #include <libataxx/position.hpp>
 #include <vector>
-#include "../src/search/tryhard/sorter.hpp"
-#include "../src/utils.hpp"
+#include "../autaxx/search/tryhard/sorter.hpp"
+#include "../autaxx/utils.hpp"
 
 std::uint64_t perft(const libataxx::Position &pos, const int depth) {
     if (depth == 0) {

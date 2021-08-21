@@ -1,5 +1,5 @@
 #include <catch2/catch.hpp>
-#include "../src/options.hpp"
+#include "../autaxx/options.hpp"
 
 TEST_CASE("Options::spins()") {
     Options::spins["TestSpin"] = Options::Spin(0, 10, 5);

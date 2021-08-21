@@ -1,5 +1,5 @@
 #include <catch2/catch.hpp>
-#include "../src/options.hpp"
+#include "../autaxx/options.hpp"
 
 TEST_CASE("Options::combos()") {
     Options::combos["TestCombo"] = Options::Combo("A", {"A", "B", "C"});
