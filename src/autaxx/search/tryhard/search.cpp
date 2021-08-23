@@ -125,6 +125,8 @@ int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int 
     auto sorter = Sorter{pos, ttmove, stack->killer};
     libataxx::Move move;
 
+    const bool has_captures = pos.them().singles() & pos.empty() & (pos.us().singles() | pos.us().doubles());
+
     // Play every legal move and run negamax on the resulting position
     int i = 0;
     while (sorter.next(move)) {
@@ -171,6 +173,11 @@ int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int 
         }
 
         i++;
+
+        // Late move pruning
+        if (has_captures && i > 30 && !pos.is_capture(move)) {
+            break;
+        }
     }
 
     // Add to transposition table
