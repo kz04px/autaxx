@@ -155,6 +155,7 @@ int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int 
         if (score > best_score) {
             best_score = score;
             best_move = move;
+
             // Update PV
             stack->pv.clear();
             stack->pv.push_back(move);
