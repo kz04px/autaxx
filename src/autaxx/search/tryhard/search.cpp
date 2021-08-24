@@ -16,6 +16,11 @@ int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int 
     assert(stack);
     assert(alpha < beta);
 
+    // Last move extension
+    if (pos.empty().count() == 1) {
+        depth++;
+    }
+
     // Stop if asked
     if (controller_.stop) {
         return 0;
