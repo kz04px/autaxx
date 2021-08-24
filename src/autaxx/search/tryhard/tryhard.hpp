@@ -11,7 +11,7 @@
 
 namespace search::tryhard {
 
-constexpr int mate_score = 10000;
+constexpr int mate_score = 1000000;
 constexpr int max_depth = 128;
 
 constexpr int eval_to_tt(const int eval, const int ply) {
