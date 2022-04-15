@@ -1,6 +1,7 @@
 #ifndef OPTIONS_HPP
 #define OPTIONS_HPP
 
+#include <string>
 #include <unordered_map>
 #include <vector>
 
