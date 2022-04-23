@@ -18,7 +18,7 @@ constexpr Score<int> pst[49] = {
 // clang-format on
 
 constexpr Score<int> piece_value = {100, 100};
-constexpr Score<int> surrounded = {15, 15};
+constexpr Score<int> surrounded = {50, 50};
 constexpr Score<int> turn_bonus = {200, 200};
 constexpr Score<int> hole_penalties[] = {
     {0, 0},
