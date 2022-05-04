@@ -104,7 +104,7 @@ int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int 
     assert(depth > 0);
 
     // Nullmove pruning
-    if (!root && stack->nullmove && depth > 2 && phase(pos) < 0.9) {
+    if (!root && stack->nullmove && depth > 2 && phase(pos) < 0.9f) {
         auto npos = pos;
         npos.makemove(libataxx::Move::nullmove());
 

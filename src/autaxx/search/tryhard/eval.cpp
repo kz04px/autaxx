@@ -69,7 +69,7 @@ int Tryhard::eval(const libataxx::Position &pos) noexcept {
     // Turn bonus
     score += turn_bonus;
 
-    return score.mg() * (1.0 - p) + score.eg() * p;
+    return score.mg() * (1.0f - p) + score.eg() * p;
 }
 
 }  // namespace search::tryhard

@@ -44,7 +44,7 @@ float default_policy(const libataxx::Position &pos) {
             score = 0.5f;
             break;
         case libataxx::Result::None:
-            score = sigmoid(0.1 * eval(pos));
+            score = sigmoid(0.1f * eval(pos));
             break;
         default:
             abort();
