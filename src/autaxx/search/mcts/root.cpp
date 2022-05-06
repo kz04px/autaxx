@@ -273,7 +273,7 @@ void MCTS::root(const libataxx::Position pos, const Settings &settings) noexcept
     if (!pv.empty()) {
         std::cout << "bestmove " << pv[0] << std::endl;
     } else {
-        std::cout << "0000" << std::endl;
+        std::cout << "bestmove 0000" << std::endl;
     }
 }
 
