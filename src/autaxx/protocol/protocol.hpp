@@ -7,4 +7,10 @@ void listen();
 
 }  // namespace UAI
 
+namespace UGI {
+
+void listen();
+
+}  // namespace UGI
+
 #endif

@@ -11,6 +11,8 @@ int main() {
 
     if (input == "uai") {
         UAI::listen();
+    } else if (input == "ugi") {
+        UGI::listen();
     } else if (input == "about") {
         std::cout << "Autaxx" << std::endl;
         std::cout << "Written in C++" << std::endl;

@@ -28,6 +28,7 @@ add_executable(
 
     main.cpp
     options.cpp
+    # UAI protocol
     protocol/uai/go.cpp
     protocol/uai/isready.cpp
     protocol/uai/listen.cpp
@@ -38,6 +39,18 @@ add_executable(
     protocol/uai/extension/display.cpp
     protocol/uai/extension/perft.cpp
     protocol/uai/extension/split.cpp
+    # UGI protocol
+    protocol/ugi/go.cpp
+    protocol/ugi/isready.cpp
+    protocol/ugi/listen.cpp
+    protocol/ugi/moves.cpp
+    protocol/ugi/position.cpp
+    protocol/ugi/setoption.cpp
+    protocol/ugi/uginewgame.cpp
+    protocol/ugi/extension/display.cpp
+    protocol/ugi/extension/perft.cpp
+    protocol/ugi/extension/split.cpp
+
     search/search.cpp
 
     search/tryhard/search.cpp
