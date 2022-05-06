@@ -1,8 +1,8 @@
+#include "../../autaxx/protocol/common/position.hpp"
 #include <catch2/catch.hpp>
 #include <libataxx/position.hpp>
 #include <sstream>
 #include <string>
-#include "../autaxx/protocol/uai/position.hpp"
 
 TEST_CASE("UAI::pos()") {
     const std::pair<std::string, std::string> tests[] = {
@@ -18,7 +18,7 @@ TEST_CASE("UAI::pos()") {
     for (const auto& [input, fen] : tests) {
         libataxx::Position pos{"startpos"};
         std::stringstream ss{input};
-        UAI::position(pos, ss);
+        common::position(pos, ss);
         REQUIRE(pos.get_fen() == fen);
     }
 }

@@ -3,7 +3,7 @@
 #include "../../options.hpp"
 #include "moves.hpp"
 
-namespace UAI {
+namespace common {
 
 // Set the current position
 // -- position startpos
@@ -29,8 +29,7 @@ void position(libataxx::Position &pos, std::stringstream &stream) {
         }
     } else {
         if (Options::checks["debug"].get()) {
-            std::cout << "info string unknown UAI::position term \"" << word
-                      << "\"" << std::endl;
+            std::cout << "info string unknown position term \"" << word << "\"" << std::endl;
         }
         return;
     }
@@ -45,4 +44,4 @@ void position(libataxx::Position &pos, std::stringstream &stream) {
     moves(pos, stream);
 }
 
-}  // namespace UAI
+}  // namespace common

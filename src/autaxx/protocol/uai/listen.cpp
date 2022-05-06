@@ -9,14 +9,14 @@
 #include "../../search/nnue/nnue.hpp"
 #include "../../search/random/random.hpp"
 #include "../../search/tryhard/tryhard.hpp"
+#include "../common/display.hpp"
+#include "../common/moves.hpp"
+#include "../common/perft.hpp"
+#include "../common/position.hpp"
+#include "../common/split.hpp"
 #include "../protocol.hpp"
-#include "extension/display.hpp"
-#include "extension/perft.hpp"
-#include "extension/split.hpp"
 #include "go.hpp"
 #include "isready.hpp"
-#include "moves.hpp"
-#include "position.hpp"
 #include "setoption.hpp"
 #include "uainewgame.hpp"
 
@@ -118,23 +118,19 @@ void listen() {
         } else if (word == "isready") {
             isready();
         } else if (word == "perft") {
-            Extension::perft(pos, stream);
+            common::perft(pos, stream);
         } else if (word == "split") {
-            Extension::split(pos, stream);
+            common::split(pos, stream);
         } else if (word == "position") {
-            position(pos, stream);
+            common::position(pos, stream);
         } else if (word == "moves") {
-            moves(pos, stream);
+            common::moves(pos, stream);
         } else if (word == "go") {
             go(pos, stream);
         } else if (word == "stop") {
             stop();
-        } else if (word == "print") {
-            Extension::display(pos);
-            std::cout << pos.get_fen() << std::endl;
-            std::cout << pos.hash() << std::endl;
-        } else if (word == "display") {
-            Extension::display(pos);
+        } else if (word == "print" || word == "display") {
+            common::display(pos);
         } else if (word == "quit") {
             break;
         } else {

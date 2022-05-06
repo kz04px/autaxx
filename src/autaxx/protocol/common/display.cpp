@@ -1,7 +1,7 @@
 #include "display.hpp"
 #include <iostream>
 
-namespace UGI::Extension {
+namespace common {
 
 // Display the board
 void display(const libataxx::Position &pos) {
@@ -10,4 +10,4 @@ void display(const libataxx::Position &pos) {
     std::cout << pos.hash() << std::endl;
 }
 
-}  // namespace UGI::Extension
+}  // namespace common

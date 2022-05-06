@@ -27,19 +27,22 @@ add_executable(
     tests
 
     main.cpp
-    uai-moves.cpp
-    uai-pos.cpp
-    uai-setoption.cpp
     options-check.cpp
     options-combo.cpp
     options-spin.cpp
     options-string.cpp
     hashtable.cpp
     tryhard_sorter.cpp
+    # Protocols
+    protocol/moves.cpp
+    protocol/position.cpp
+    protocol/uai-setoption.cpp
 
     ../autaxx/options.cpp
-    ../autaxx/protocol/uai/moves.cpp
-    ../autaxx/protocol/uai/position.cpp
+    # Common protocol features
+    ../autaxx/protocol/common/moves.cpp
+    ../autaxx/protocol/common/position.cpp
+    # UAI protocol
     ../autaxx/protocol/uai/setoption.cpp
 
     ../autaxx/search/tryhard/eval.cpp

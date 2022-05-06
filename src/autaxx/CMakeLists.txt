@@ -28,28 +28,24 @@ add_executable(
 
     main.cpp
     options.cpp
+    # Common protocol features
+    protocol/common/display.cpp
+    protocol/common/perft.cpp
+    protocol/common/split.cpp
+    protocol/common/moves.cpp
+    protocol/common/position.cpp
     # UAI protocol
     protocol/uai/go.cpp
     protocol/uai/isready.cpp
     protocol/uai/listen.cpp
-    protocol/uai/moves.cpp
-    protocol/uai/position.cpp
     protocol/uai/setoption.cpp
     protocol/uai/uainewgame.cpp
-    protocol/uai/extension/display.cpp
-    protocol/uai/extension/perft.cpp
-    protocol/uai/extension/split.cpp
     # UGI protocol
     protocol/ugi/go.cpp
     protocol/ugi/isready.cpp
     protocol/ugi/listen.cpp
-    protocol/ugi/moves.cpp
-    protocol/ugi/position.cpp
     protocol/ugi/setoption.cpp
     protocol/ugi/uginewgame.cpp
-    protocol/ugi/extension/display.cpp
-    protocol/ugi/extension/perft.cpp
-    protocol/ugi/extension/split.cpp
 
     search/search.cpp
 
