@@ -68,7 +68,7 @@ void backup_negamax(Node *n, float delta) {
 
 [[nodiscard]] bool legal_pv(const libataxx::Position &pos, const std::vector<libataxx::Move> &moves) {
     auto npos = pos;
-    int ply = 0;
+    std::size_t ply = 0;
     for (const auto &move : moves) {
         if (!npos.legal_move(move)) {
             break;

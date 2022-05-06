@@ -103,7 +103,7 @@ TEST_CASE("Tryhard sorter") {
 
     for (const auto &[fen, nodes] : tests) {
         libataxx::Position pos{fen};
-        for (int i = 0; i < nodes.size(); ++i) {
+        for (std::size_t i = 0; i < nodes.size(); ++i) {
             REQUIRE(nodes[i] == perft(pos, i));
         }
     }

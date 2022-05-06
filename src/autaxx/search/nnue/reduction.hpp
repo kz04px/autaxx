@@ -6,7 +6,10 @@
 
 namespace search::nnue {
 
-[[nodiscard]] int reduction(const libataxx::Position &npos, const int move_num, const int depth, const bool pvnode) {
+[[nodiscard]] int reduction(const libataxx::Position &,
+                            const int move_num,
+                            [[maybe_unused]] const int depth,
+                            [[maybe_unused]] const bool pvnode) {
     assert(depth >= 0);
     assert(move_num >= 0);
 

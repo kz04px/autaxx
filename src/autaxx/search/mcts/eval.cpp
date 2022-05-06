@@ -32,7 +32,7 @@ constexpr Score<int> hole_penalties[] = {
 };
 
 [[nodiscard]] constexpr Score<int> eval_us(const libataxx::Bitboard &us,
-                                           const libataxx::Bitboard &them,
+                                           const libataxx::Bitboard &,
                                            const libataxx::Bitboard &empty) {
     Score<int> score;
 

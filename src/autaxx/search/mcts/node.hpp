@@ -138,7 +138,7 @@ class Node {
         assert(expandable());
 
         libataxx::Move moves[libataxx::max_moves];
-        const int num_moves = pos.legal_moves(moves);
+        [[maybe_unused]] const int num_moves = pos.legal_moves(moves);
         assert(num_children() < num_moves);
         assert(num_moves <= children_.capacity());
         assert(pos.legal_move(moves[num_children()]));
@@ -149,11 +149,11 @@ class Node {
         return &children_.back();
     }
 
-    [[nodiscard]] std::vector<libataxx::Move> get_pv(const int max_length = 8) const noexcept {
+    [[nodiscard]] std::vector<libataxx::Move> get_pv(const std::size_t max_length = 8) const noexcept {
         std::vector<libataxx::Move> moves;
         const Node *n = this;
         while (n->expanded()) {
-            const int idx = n->most_visited_child();
+            const std::size_t idx = n->most_visited_child();
             assert(idx < n->num_children());
             n = &n->children_[idx];
             assert(n);

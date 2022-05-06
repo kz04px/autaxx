@@ -120,7 +120,7 @@ namespace search::nnue {
     }
 
     // Reverse futility pruning
-    if (!root && stack->nullmove && depth <= futility_margins.size() &&
+    if (!root && stack->nullmove && depth <= static_cast<int>(futility_margins.size()) &&
         static_eval + futility_margins[depth - 1] < alpha) {
         return alpha;
     }

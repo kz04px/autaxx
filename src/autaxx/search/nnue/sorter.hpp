@@ -97,8 +97,8 @@ class Sorter {
                     continue;
                 }
 
-                const auto to_bb = libataxx::Bitboard{moves_[i].to()};
-                const auto from_bb = libataxx::Bitboard{moves_[i].from()};
+                // const auto to_bb = libataxx::Bitboard{moves_[i].to()};
+                // const auto from_bb = libataxx::Bitboard{moves_[i].from()};
                 const auto captures = pos_.count_captures(moves_[i]);
 
                 // Material
@@ -154,9 +154,9 @@ class Sorter {
                     continue;
                 }
 
-                const auto nowhere = ~(pos_.black() | pos_.white()).singles();
-                const auto to_bb = libataxx::Bitboard{moves_[i].to()};
-                const auto from_bb = libataxx::Bitboard{moves_[i].from()};
+                // const auto nowhere = ~(pos_.black() | pos_.white()).singles();
+                // const auto to_bb = libataxx::Bitboard{moves_[i].to()};
+                // const auto from_bb = libataxx::Bitboard{moves_[i].from()};
 
                 if (moves_[i].is_single()) {
                     // PST
