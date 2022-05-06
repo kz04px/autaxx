@@ -9,10 +9,9 @@ namespace search::nnue {
 
 class Network {
    public:
-    Network() {
-    }
+    [[nodiscard]] Network() = default;
 
-    Network(const std::string &path) {
+    [[nodiscard]] Network(const std::string &path) {
         load_weights(path);
     }
 

@@ -9,7 +9,7 @@ namespace search {
 template <class T>
 class TT {
    public:
-    TT(unsigned int mb) : filled_{0} {
+    [[nodiscard]] TT(unsigned int mb) : filled_{0} {
         if (mb < 1) {
             mb = 1;
         }

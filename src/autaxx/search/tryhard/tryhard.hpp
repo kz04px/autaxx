@@ -43,7 +43,7 @@ class Tryhard : public Search {
         bool nullmove;
     };
 
-    Tryhard(const unsigned int mb) : tt_{mb} {
+    [[nodiscard]] Tryhard(const unsigned int mb) : tt_{mb} {
     }
 
     void go(const libataxx::Position pos, const Settings &settings) override {

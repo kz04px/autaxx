@@ -12,7 +12,7 @@ using namespace std::chrono;
 
 namespace search::tryhard {
 
-int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int beta, int depth) {
+[[nodiscard]] int Tryhard::search(Stack *stack, const libataxx::Position &pos, int alpha, int beta, int depth) {
     assert(stack);
     assert(alpha < beta);
 

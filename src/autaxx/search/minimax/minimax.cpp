@@ -6,7 +6,7 @@ using namespace std::chrono;
 
 namespace search::minimax {
 
-int Minimax::minimax(Stack *stack, const libataxx::Position &pos, int depth) {
+[[nodiscard]] int Minimax::minimax(Stack *stack, const libataxx::Position &pos, int depth) {
     assert(stack);
 
     // Stop if asked

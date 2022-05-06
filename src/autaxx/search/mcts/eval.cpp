@@ -58,7 +58,7 @@ constexpr Score<int> hole_penalties[] = {
 }
 
 // Return the evaluation of the position from the side to move's point of view
-int eval(const libataxx::Position &pos) {
+[[nodiscard]] int eval(const libataxx::Position &pos) {
     const auto p = phase(pos);
     Score<int> score;
 

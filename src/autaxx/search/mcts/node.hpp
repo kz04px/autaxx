@@ -11,7 +11,7 @@ namespace search::mcts {
 
 class Node {
    public:
-    Node(const libataxx::Position &pos)
+    [[nodiscard]] Node(const libataxx::Position &pos)
         : parent_{nullptr},
           move_{},
           reward_{0.0},
@@ -26,7 +26,7 @@ class Node {
         calculate_probabilities(pos);
     }
 
-    Node(Node *parent, const libataxx::Position &pos, const libataxx::Move &move)
+    [[nodiscard]] Node(Node *parent, const libataxx::Position &pos, const libataxx::Move &move)
         : parent_{parent},
           move_{move},
           reward_{0.0},

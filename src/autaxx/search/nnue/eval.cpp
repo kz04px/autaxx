@@ -6,12 +6,12 @@
 namespace search::nnue {
 
 // Return the evaluation of the position from the side to move's point of view
-int NNUE::eval() const noexcept {
+[[nodiscard]] int NNUE::eval() const noexcept {
     return static_cast<int>(600.0f * m_network.run(m_accumulator));
 }
 
 // Return the evaluation of the position from the side to move's point of view
-int NNUE::eval(const libataxx::Position &pos) const noexcept {
+[[nodiscard]] int NNUE::eval(const libataxx::Position &pos) const noexcept {
     return static_cast<int>(600.0f * m_network.run(pos));
 }
 

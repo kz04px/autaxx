@@ -9,9 +9,9 @@ namespace Options {
 
 // Integer value between min and max
 struct Spin {
-    Spin() {
+    [[nodiscard]] Spin() {
     }
-    Spin(int min, int max, int d) : min_(min), max_(max), default_(d) {
+    [[nodiscard]] Spin(int min, int max, int d) : min_(min), max_(max), default_(d) {
         set(d);
     }
     void set(const int n) {
@@ -23,7 +23,7 @@ struct Spin {
             value_ = n;
         }
     }
-    int get() const {
+    [[nodiscard]] int get() const {
         return value_;
     }
     int min_ = 0;
@@ -34,15 +34,15 @@ struct Spin {
 
 // Boolean value
 struct Check {
-    Check() {
+    [[nodiscard]] Check() {
     }
-    explicit Check(bool d) : default_(d) {
+    [[nodiscard]] explicit Check(bool d) : default_(d) {
         set(d);
     }
     void set(const bool n) {
         value_ = n;
     }
-    bool get() const {
+    [[nodiscard]] bool get() const {
         return value_;
     }
     bool value_ = false;
@@ -51,15 +51,15 @@ struct Check {
 
 // String value
 struct String {
-    String() {
+    [[nodiscard]] String() {
     }
-    explicit String(const std::string &d) : default_(d) {
+    [[nodiscard]] explicit String(const std::string &d) : default_(d) {
         set(d);
     }
     void set(const std::string &n) {
         value_ = n;
     }
-    std::string get() const {
+    [[nodiscard]] std::string get() const {
         return value_;
     }
     std::string value_ = "";
@@ -68,9 +68,9 @@ struct String {
 
 // String value from a list of values
 struct Combo {
-    Combo() {
+    [[nodiscard]] Combo() {
     }
-    Combo(const std::string &d, const std::vector<std::string> &o) : default_(d), options_(o) {
+    [[nodiscard]] Combo(const std::string &d, const std::vector<std::string> &o) : default_(d), options_(o) {
         set(d);
     }
     void set(const std::string &n) {
@@ -81,7 +81,7 @@ struct Combo {
             }
         }
     }
-    std::string get() const {
+    [[nodiscard]] std::string get() const {
         return value_;
     }
     std::string value_ = "";

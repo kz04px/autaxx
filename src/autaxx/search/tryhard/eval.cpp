@@ -59,7 +59,7 @@ constexpr Score<int> hole_penalties[] = {
 }
 
 // Return the evaluation of the position from the side to move's point of view
-int Tryhard::eval(const libataxx::Position &pos) noexcept {
+[[nodiscard]] int Tryhard::eval(const libataxx::Position &pos) noexcept {
     const auto p = phase(pos);
     Score<int> score;
 

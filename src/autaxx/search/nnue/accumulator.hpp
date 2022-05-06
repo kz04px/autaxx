@@ -18,10 +18,10 @@ class Accumulator {
     static constexpr std::size_t dim_in = 2 * 49;
     static constexpr std::size_t dim_out = 32;
 
-    Accumulator(const libnnue::Vector<bias_type, dim_out> *bias_first,
-                const libnnue::Weights<weight_type, dim_in, dim_out> *weights_first,
-                const libnnue::Vector<bias_type, dim_out> *bias_second,
-                const libnnue::Weights<weight_type, dim_in, dim_out> *weights_second)
+    [[nodiscard]] Accumulator(const libnnue::Vector<bias_type, dim_out> *bias_first,
+                              const libnnue::Weights<weight_type, dim_in, dim_out> *weights_first,
+                              const libnnue::Vector<bias_type, dim_out> *bias_second,
+                              const libnnue::Weights<weight_type, dim_in, dim_out> *weights_second)
         : m_accumulator(bias_first, weights_first, bias_second, weights_second) {
     }
 

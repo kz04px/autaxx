@@ -44,7 +44,7 @@ class NNUE : public Search {
         bool nullmove;
     };
 
-    NNUE(const std::string &nnue_path, const unsigned int mb)
+    [[nodiscard]] NNUE(const std::string &nnue_path, const unsigned int mb)
         : m_network{}, m_accumulator{m_network.new_accumulator()}, stack_{}, tt_{mb} {
         m_network.load_weights(nnue_path);
     }

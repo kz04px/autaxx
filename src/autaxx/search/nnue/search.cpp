@@ -14,7 +14,7 @@ using namespace std::chrono;
 
 namespace search::nnue {
 
-int NNUE::search(Stack *stack, const libataxx::Position &pos, int alpha, int beta, int depth) {
+[[nodiscard]] int NNUE::search(Stack *stack, const libataxx::Position &pos, int alpha, int beta, int depth) {
     assert(stack);
     assert(alpha < beta);
 

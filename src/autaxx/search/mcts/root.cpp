@@ -9,11 +9,11 @@ using namespace std::chrono;
 
 namespace search::mcts {
 
-float sigmoid(const float score, const float k = 1.13) {
+[[nodiscard]] float sigmoid(const float score, const float k = 1.13) {
     return 1.0f / (1.0f + std::pow(10.0f, -k * score / 400.0f));
 }
 
-Node *tree_policy(Node *n, libataxx::Position &pos) {
+[[nodiscard]] Node *tree_policy(Node *n, libataxx::Position &pos) {
     assert(n);
 
     while (!n->terminal()) {
@@ -32,7 +32,7 @@ Node *tree_policy(Node *n, libataxx::Position &pos) {
     return n;
 }
 
-float default_policy(const libataxx::Position &pos) {
+[[nodiscard]] float default_policy(const libataxx::Position &pos) {
     float score = 0.5f;
 
     switch (pos.result()) {
@@ -66,7 +66,7 @@ void backup_negamax(Node *n, float delta) {
     }
 }
 
-bool legal_pv(const libataxx::Position &pos, const std::vector<libataxx::Move> &moves) {
+[[nodiscard]] bool legal_pv(const libataxx::Position &pos, const std::vector<libataxx::Move> &moves) {
     auto npos = pos;
     int ply = 0;
     for (const auto &move : moves) {
@@ -100,7 +100,7 @@ void print(const Node *n, const int depth) {
     }
 }
 
-bool verify(const Node *n) {
+[[nodiscard]] bool verify(const Node *n) {
     assert(n);
 
     // Reward

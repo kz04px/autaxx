@@ -29,7 +29,7 @@ enum class Stage : std::uint8_t
 
 class Sorter {
    public:
-    Sorter(const libataxx::Position &pos, const libataxx::Move &ttmove, const libataxx::Move &killer)
+    [[nodiscard]] Sorter(const libataxx::Position &pos, const libataxx::Move &ttmove, const libataxx::Move &killer)
         : pos_{pos}, ttmove_{ttmove}, killer_{killer}, num_moves_{0}, moves_{}, stage_{Stage::TT} {
     }
 

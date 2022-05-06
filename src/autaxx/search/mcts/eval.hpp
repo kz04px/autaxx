@@ -5,7 +5,7 @@
 
 namespace search::mcts {
 
-int eval(const libataxx::Position &pos);
+[[nodiscard]] int eval(const libataxx::Position &pos);
 
 }  // namespace search::mcts
 

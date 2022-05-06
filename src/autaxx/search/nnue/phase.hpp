@@ -5,7 +5,7 @@
 
 namespace search::nnue {
 
-constexpr float phase(const libataxx::Position &pos) {
+[[nodiscard]] constexpr float phase(const libataxx::Position &pos) {
     const int both = (pos.us() | pos.them()).count();
     const int all = (~pos.gaps()).count();
     return static_cast<float>(both) / all;

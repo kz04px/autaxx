@@ -6,10 +6,10 @@
 template <typename T>
 class Score {
    public:
-    constexpr Score() : m_data{} {
+    [[nodiscard]] constexpr Score() : m_data{} {
     }
 
-    constexpr Score(const T mg, const T eg) : m_data{mg, eg} {
+    [[nodiscard]] constexpr Score(const T mg, const T eg) : m_data{mg, eg} {
     }
 
     [[nodiscard]] constexpr Score operator+(const Score &rhs) const noexcept {
