@@ -33,9 +33,10 @@ constexpr Score<int> hole_penalties[] = {
 };
 
 [[nodiscard]] constexpr Score<int> eval_us(const libataxx::Bitboard &us,
-                                           const libataxx::Bitboard &,
+                                           const libataxx::Bitboard &them,
                                            const libataxx::Bitboard &empty) {
     Score<int> score;
+    const auto reachable = them.singles() | them.doubles();
 
     // Material
     score += piece_value * us.count();
@@ -46,7 +47,7 @@ constexpr Score<int> hole_penalties[] = {
     }
 
     // Holes
-    for (const auto &sq : us.singles() & empty) {
+    for (const auto &sq : us.singles() & empty & reachable) {
         const auto bb = libataxx::Bitboard{sq};
         const auto neighbours = bb.singles() & us;
         score += hole_penalties[neighbours.count()];
