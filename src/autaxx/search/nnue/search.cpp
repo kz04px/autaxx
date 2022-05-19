@@ -18,6 +18,11 @@ namespace search::nnue {
     assert(stack);
     assert(alpha < beta);
 
+    // Last move extension
+    if (pos.empty().count() == 1) {
+        depth++;
+    }
+
     // Stop if asked
     if (controller_.stop) {
         return 0;
