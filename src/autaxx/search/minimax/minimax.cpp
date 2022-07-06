@@ -22,17 +22,16 @@ namespace search::minimax {
     stats_.seldepth = std::max(stack->ply, stats_.seldepth);
 
     // Return mate or draw scores if the game is over
-    if (pos.gameover()) {
-        const int num_us = pos.us().count();
-        const int num_them = pos.them().count();
-
-        if (num_us > num_them) {
-            return mate_score - stack->ply;
-        } else if (num_us < num_them) {
-            return -mate_score + stack->ply;
-        } else {
+    const auto num_us = pos.us().count();
+    const auto num_them = pos.them().count();
+    switch (pos.result()) {
+        case libataxx::Result::None:
+            break;
+        case libataxx::Result::BlackWin:
+        case libataxx::Result::WhiteWin:
+            return num_us > num_them ? mate_score - stack->ply : num_them > num_us ? -mate_score + stack->ply : 0;
+        case libataxx::Result::Draw:
             return 0;
-        }
     }
 
     // Make sure we stop searching
