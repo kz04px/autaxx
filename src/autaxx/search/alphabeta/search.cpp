@@ -65,7 +65,10 @@ int Alphabeta::search(Stack *stack, const libataxx::Position &pos, int alpha, co
             stack->pv.insert(stack->pv.begin() + 1, (stack + 1)->pv.begin(), (stack + 1)->pv.end());
 
             best_score = score;
-            alpha = score;
+
+            if (score > alpha) {
+                alpha = score;
+            }
 
             if (alpha >= beta) {
                 break;
