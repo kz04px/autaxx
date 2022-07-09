@@ -47,11 +47,9 @@ int Alphabeta::search(Stack *stack, const libataxx::Position &pos, int alpha, co
 
     assert(num_moves > 0);
 
-    // Keeping track of the node count
-    stats_.nodes += num_moves;
-
     // Play every legal move and run negamax on the resulting position
     for (int i = 0; i < num_moves; ++i) {
+        stats_.nodes++;
         (stack + 1)->pv.clear();
 
         auto npos = pos;
