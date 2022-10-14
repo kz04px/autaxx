@@ -3,13 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 # Project
 project(tests VERSION 1.0 LANGUAGES CXX)
 
-# Find packages
-find_package(Catch2 CONFIG REQUIRED)
-
-# Third party includes
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libataxx/src/)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libnnue/src/)
-
 # Flags
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wshadow")
@@ -50,4 +43,4 @@ add_executable(
 
 set_property(TARGET tests PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE FALSE)
 
-target_link_libraries(tests Catch2::Catch2 "${CMAKE_CURRENT_LIST_DIR}/../libataxx/build/static/libataxx.a")
+target_link_libraries(tests Catch2::Catch2 ataxx_static)
