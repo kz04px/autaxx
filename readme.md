@@ -15,7 +15,7 @@ git clone https://github.com/kz04px/autaxx
 mkdir ./autaxx/build
 cd ./autaxx/build
 cmake ..
-make
+cmake --build .
 ```
 
 ---
