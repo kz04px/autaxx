@@ -24,11 +24,7 @@ class MostCaptures : public Search {
         std::vector<libataxx::Move> best_moves;
 
         for (int i = 0; i < num_moves; ++i) {
-            int num_captures = pos.count_captures(moves[i]);
-
-            if (moves[i].is_single()) {
-                num_captures++;
-            }
+            const int num_captures = pos.count_captures(moves[i]) + moves[i].is_single();
 
             if (num_captures > most_captures) {
                 best_moves.clear();
