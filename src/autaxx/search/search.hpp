@@ -43,6 +43,7 @@ struct Stats {
         std::memset(cutoffs, 0, libataxx::max_moves * sizeof(std::uint64_t));
 #endif
     }
+
     std::uint64_t nodes = 0;
     std::uint64_t tthits = 0;
     int seldepth = 0;
