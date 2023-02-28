@@ -2,6 +2,7 @@
 #define SCORE_HPP
 
 #include <array>
+#include <ostream>
 
 template <typename T>
 class Score {
