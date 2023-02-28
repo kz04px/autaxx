@@ -62,8 +62,8 @@ struct String {
     [[nodiscard]] std::string get() const {
         return value_;
     }
-    std::string value_ = "";
-    std::string default_ = "";
+    std::string value_;
+    std::string default_;
 };
 
 // String value from a list of values
@@ -84,9 +84,9 @@ struct Combo {
     [[nodiscard]] std::string get() const {
         return value_;
     }
-    std::string value_ = "";
-    std::string default_ = "";
-    std::vector<std::string> options_ = {};
+    std::string value_;
+    std::string default_;
+    std::vector<std::string> options_;
 };
 
 extern std::unordered_map<std::string, Spin> spins;

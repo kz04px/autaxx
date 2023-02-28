@@ -11,8 +11,8 @@ namespace common {
 // -- position fen x5o/7/2-1-2/7/2-1-2/7/o5x x 0 1
 // -- position fen x5o/7/2-1-2/7/2-1-2/7/o5x x 0 1 moves a3 d2d4
 void position(libataxx::Position &pos, std::stringstream &stream) {
-    std::string word = "";
-    std::string fen = "";
+    std::string word;
+    std::string fen;
     stream >> word;
 
     // Position
