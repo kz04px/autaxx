@@ -6,7 +6,7 @@
 #include "sorter.hpp"
 #include "tryhard.hpp"
 
-constexpr std::array<int, 4> futility_margins = {800, 800, 1600, 1600};
+constexpr std::array<int, 4> futility_margins = {257, 347, 478, 774};
 
 using namespace std::chrono;
 
@@ -104,7 +104,7 @@ namespace search::tryhard {
     assert(depth > 0);
 
     // Nullmove pruning
-    if (!root && stack->nullmove && depth > 2 && phase(pos) < 0.9f) {
+    if (!root && stack->nullmove && depth > 2 && phase(pos) < 0.54f) {
         auto npos = pos;
         npos.makemove(libataxx::Move::nullmove());
 
@@ -181,7 +181,7 @@ namespace search::tryhard {
         i++;
 
         // Late move pruning
-        if (has_captures && i > 30 && !pos.is_capture(move)) {
+        if (has_captures && i > 27 && !pos.is_capture(move)) {
             break;
         }
     }

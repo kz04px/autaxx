@@ -71,3 +71,4 @@ quit
 ### Credits
 - Special thanks to [connormcmonigle](https://github.com/connormcmonigle) for the generation of NNUE weight files and giving me the rights to include them here.
 - [Catch2](https://github.com/catchorg/Catch2) - A modern, C++-native, header-only, test framework for unit-tests, TDD and BDD - using C++11, C++14, C++17 and later (or C++03 on the Catch1.x branch)
+- [dblue](https://github.com/dhbloo) for tuning weights
