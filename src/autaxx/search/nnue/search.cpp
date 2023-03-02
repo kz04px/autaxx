@@ -137,6 +137,8 @@ namespace search::nnue {
     auto sorter = Sorter{pos, ttmove, stack->killer};
     libataxx::Move move;
 
+    const bool has_captures = pos.them().singles() & pos.empty() & (pos.us().singles() | pos.us().doubles());
+
     // Play every legal move and run negamax on the resulting position
     int i = 0;
     while (sorter.next(move)) {
@@ -187,6 +189,11 @@ namespace search::nnue {
         }
 
         i++;
+
+        // Late move pruning
+        if (has_captures && i > 27 && !pos.is_capture(move)) {
+            break;
+        }
     }
 
     // Add to transposition table
