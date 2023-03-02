@@ -13,13 +13,11 @@ namespace search::nnue {
     assert(depth >= 0);
     assert(move_num >= 0);
 
-    if (move_num < 3) {
-        return 0;
-    } else if (move_num < 16) {
+    if (move_num < 9) {
         return 2;
     }
 
-    return 4;
+    return 3;
 }
 
 }  // namespace search::nnue

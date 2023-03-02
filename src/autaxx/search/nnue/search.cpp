@@ -8,7 +8,7 @@
 #include "reduction.hpp"
 #include "sorter.hpp"
 
-constexpr std::array<int, 4> futility_margins = {800, 800, 1600, 1600};
+constexpr std::array<int, 4> futility_margins = {257, 347, 478, 774};
 
 using namespace std::chrono;
 
@@ -107,7 +107,7 @@ namespace search::nnue {
     assert(depth > 0);
 
     // Nullmove pruning
-    if (!root && stack->nullmove && depth > 2 && phase(pos) < 0.9f) {
+    if (!root && stack->nullmove && depth > 2 && phase(pos) < 0.54f) {
         auto npos = pos;
         npos.makemove(libataxx::Move::nullmove());
         m_accumulator.update(pos, libataxx::Move::nullmove());
