@@ -16,7 +16,7 @@ class Node {
           move_{},
           reward_{0.0},
           visits_{0},
-          children_left_{pos.count_moves()},
+          children_left_{pos.count_legal_moves()},
           children_{},
           probabilities_{} {
         assert(root());
@@ -31,7 +31,7 @@ class Node {
           move_{move},
           reward_{0.0},
           visits_{0},
-          children_left_{pos.count_moves()},
+          children_left_{pos.count_legal_moves()},
           children_{},
           probabilities_{} {
         assert(!root());
@@ -141,7 +141,7 @@ class Node {
         [[maybe_unused]] const int num_moves = pos.legal_moves(moves);
         assert(num_children() < num_moves);
         assert(num_moves <= children_.capacity());
-        assert(pos.legal_move(moves[num_children()]));
+        assert(pos.is_legal_move(moves[num_children()]));
         auto npos = pos;
         npos.makemove(moves[num_children()]);
         children_.emplace_back(this, npos, moves[num_children()]);

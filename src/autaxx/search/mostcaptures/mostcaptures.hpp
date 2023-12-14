@@ -40,7 +40,7 @@ class MostCaptures : public Search {
         // Material only eval
         auto npos = pos;
         npos.makemove(best_moves[idx]);
-        const auto score = -100 * (npos.us().count() - npos.them().count());
+        const auto score = -100 * (npos.get_us().count() - npos.get_them().count());
         std::cout << "info";
         std::cout << " score cp " << score;
         std::cout << std::endl;

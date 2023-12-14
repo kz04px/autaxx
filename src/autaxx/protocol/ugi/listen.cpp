@@ -132,11 +132,11 @@ void listen() {
         } else if (word == "query") {
             stream >> word;
             if (word == "p1turn") {
-                std::cout << "response " << (pos.turn() == libataxx::Side::Black ? "true" : "false") << std::endl;
+                std::cout << "response " << (pos.get_turn() == libataxx::Side::Black ? "true" : "false") << std::endl;
             } else if (word == "gameover") {
-                std::cout << "response " << (pos.gameover() ? "true" : "false") << std::endl;
+                std::cout << "response " << (pos.is_gameover() ? "true" : "false") << std::endl;
             } else if (word == "result") {
-                switch (pos.result()) {
+                switch (pos.get_result()) {
                     case libataxx::Result::BlackWin:
                         std::cout << "response p1win" << std::endl;
                         break;

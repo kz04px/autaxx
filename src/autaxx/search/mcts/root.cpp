@@ -19,12 +19,12 @@ namespace search::mcts {
     while (!n->terminal()) {
         if (n->expandable()) {
             n = n->expand(pos);
-            assert(pos.legal_move(n->move()));
+            assert(pos.is_legal_move(n->move()));
             pos.makemove(n->move());
             return n;
         } else {
             const int idx = n->best_scoring_child();
-            assert(pos.legal_move(n->child(idx)->move()));
+            assert(pos.is_legal_move(n->child(idx)->move()));
             pos.makemove(n->child(idx)->move());
             n = n->child(idx);
         }
@@ -35,7 +35,7 @@ namespace search::mcts {
 [[nodiscard]] float default_policy(const libataxx::Position &pos) {
     float score = 0.5f;
 
-    switch (pos.result()) {
+    switch (pos.get_result()) {
         case libataxx::Result::BlackWin:
         case libataxx::Result::WhiteWin:
             score = 0.0f;
@@ -70,7 +70,7 @@ void backup_negamax(Node *n, float delta) {
     auto npos = pos;
     std::size_t ply = 0;
     for (const auto &move : moves) {
-        if (!npos.legal_move(move)) {
+        if (!npos.is_legal_move(move)) {
             break;
         } else {
             npos.makemove(move);
@@ -204,7 +204,7 @@ void MCTS::root(const libataxx::Position pos, const Settings &settings) noexcept
             int search_time = 0;
 
             // Calculate time usage
-            if (pos.turn() == libataxx::Side::Black) {
+            if (pos.get_turn() == libataxx::Side::Black) {
                 search_time = settings.btime / 30;
             } else {
                 search_time = settings.wtime / 30;

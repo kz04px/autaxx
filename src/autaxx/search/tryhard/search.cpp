@@ -17,7 +17,7 @@ namespace search::tryhard {
     assert(alpha < beta);
 
     // Last move extension
-    if (pos.empty().count() == 1) {
+    if (pos.get_empty().count() == 1) {
         depth++;
     }
 
@@ -34,17 +34,17 @@ namespace search::tryhard {
     stats_.seldepth = std::max(stack->ply, stats_.seldepth);
 
     // Return mate or draw scores if the game is over
-    if (const auto r = pos.result(); r != libataxx::Result::None) {
+    if (const auto r = pos.get_result(); r != libataxx::Result::None) {
         if (r == libataxx::Result::Draw) {
             return 0;
         } else if (r == libataxx::Result::BlackWin) {
-            if (pos.turn() == libataxx::Side::Black) {
+            if (pos.get_turn() == libataxx::Side::Black) {
                 return mate_score - stack->ply;
             } else {
                 return -mate_score + stack->ply;
             }
         } else if (r == libataxx::Result::WhiteWin) {
-            if (pos.turn() == libataxx::Side::White) {
+            if (pos.get_turn() == libataxx::Side::White) {
                 return mate_score - stack->ply;
             } else {
                 return -mate_score + stack->ply;
@@ -65,8 +65,8 @@ namespace search::tryhard {
     libataxx::Move ttmove;
 
     // Probe transposition table
-    const auto ttentry = tt_.poll(pos.hash());
-    if (ttentry.hash == pos.hash() && pos.legal_move(ttentry.move)) {
+    const auto ttentry = tt_.poll(pos.get_hash());
+    if (ttentry.hash == pos.get_hash() && pos.is_legal_move(ttentry.move)) {
         ttmove = ttentry.move;
         stats_.tthits++;
 
@@ -130,7 +130,8 @@ namespace search::tryhard {
     auto sorter = Sorter{pos, ttmove, stack->killer};
     libataxx::Move move;
 
-    const bool has_captures = pos.them().singles() & pos.empty() & (pos.us().singles() | pos.us().doubles());
+    const bool has_captures =
+        pos.get_them().singles() & pos.get_empty() & (pos.get_us().singles() | pos.get_us().doubles());
 
     // Play every legal move and run negamax on the resulting position
     int i = 0;
@@ -188,7 +189,7 @@ namespace search::tryhard {
 
     // Add to transposition table
     TTEntry nentry;
-    nentry.hash = pos.hash();
+    nentry.hash = pos.get_hash();
     nentry.move = best_move;
     nentry.score = eval_to_tt(best_score, stack->ply);
     nentry.depth = depth;
@@ -198,9 +199,9 @@ namespace search::tryhard {
     } else if (best_score >= beta) {
         nentry.flag = TTEntry::Flag::Lower;
     }
-    tt_.add(pos.hash(), nentry);
+    tt_.add(pos.get_hash(), nentry);
 
-    assert(tt_.poll(pos.hash()) == nentry);
+    assert(tt_.poll(pos.get_hash()) == nentry);
 
     return alpha;
 }

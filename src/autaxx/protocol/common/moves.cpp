@@ -20,7 +20,7 @@ void moves(libataxx::Position &pos, std::stringstream &stream) {
             continue;
         }
 
-        if (pos.legal_move(move)) {
+        if (pos.is_legal_move(move)) {
             pos.makemove(move);
         } else {
             if (Options::checks["debug"].get()) {

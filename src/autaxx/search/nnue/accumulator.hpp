@@ -34,7 +34,7 @@ class Accumulator {
     }
 
     void update(const libataxx::Position &pos, const libataxx::Move &move) {
-        assert(pos.legal_move(move));
+        assert(pos.is_legal_move(move));
 
         if (move == libataxx::Move::nullmove()) {
             m_accumulator.flip();
@@ -43,8 +43,8 @@ class Accumulator {
 
         const auto to_bb = libataxx::Bitboard(move.to());
         const auto neighbours = to_bb.singles();
-        const auto captured = neighbours & pos.them();
-        const bool flippy = pos.turn() == libataxx::Side::White;
+        const auto captured = neighbours & pos.get_them();
+        const bool flippy = pos.get_turn() == libataxx::Side::White;
 
         // Add piece
         m_accumulator.update_first(index(move.to(), flippy), true);
@@ -74,19 +74,19 @@ class Accumulator {
         m_accumulator.clear();
 
         // Black pieces
-        for (const auto sq : pos.black()) {
+        for (const auto sq : pos.get_black()) {
             m_accumulator.update_first(index(sq, false), true);
             m_accumulator.update_second(index(sq, true), true);
         }
 
         // White pieces
-        for (const auto sq : pos.white()) {
+        for (const auto sq : pos.get_white()) {
             m_accumulator.update_first(index(sq, true), true);
             m_accumulator.update_second(index(sq, false), true);
         }
 
         // Are we flipped?
-        m_accumulator.flip(pos.turn() == libataxx::Side::White);
+        m_accumulator.flip(pos.get_turn() == libataxx::Side::White);
     }
 
    private:

@@ -22,9 +22,9 @@ int Alphabeta::search(Stack *stack, const libataxx::Position &pos, int alpha, co
     stats_.seldepth = std::max(stack->ply, stats_.seldepth);
 
     // Return mate or draw scores if the game is over
-    const auto num_us = pos.us().count();
-    const auto num_them = pos.them().count();
-    switch (pos.result()) {
+    const auto num_us = pos.get_us().count();
+    const auto num_them = pos.get_them().count();
+    switch (pos.get_result()) {
         case libataxx::Result::None:
             break;
         case libataxx::Result::BlackWin:

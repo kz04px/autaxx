@@ -62,7 +62,7 @@ class Sorter {
         if (stage_ == Stage::TT) {
             stage_ = Stage::Killer;
 
-            if (ttmove_ && pos_.legal_move(ttmove_)) {
+            if (ttmove_ && pos_.is_legal_move(ttmove_)) {
                 moves_[0] = ttmove_;
                 num_moves_ = 1;
                 return;
@@ -72,7 +72,7 @@ class Sorter {
         if (stage_ == Stage::Killer) {
             stage_ = Stage::Captures;
 
-            if (killer_ && killer_ != ttmove_ && pos_.legal_move(killer_)) {
+            if (killer_ && killer_ != ttmove_ && pos_.is_legal_move(killer_)) {
                 moves_[0] = killer_;
                 num_moves_ = 1;
                 return;
@@ -105,7 +105,7 @@ class Sorter {
                 scores_[i] = 100 * captures;
 
                 // Move near friendly pieces
-                // scores_[i] += (to_bb.singles() & pos_.us()).count();
+                // scores_[i] += (to_bb.singles() & pos_.get_us()).count();
 
                 if (moves_[i].is_single()) {
                     // Extra piece bonus
@@ -115,10 +115,10 @@ class Sorter {
                     // scores_[i] += pst[moves_[i].to().index()];
 
                     // Avoid leaving big holes
-                    // scores_[i] -= (from_bb.singles() & pos_.us()).count();
+                    // scores_[i] -= (from_bb.singles() & pos_.get_us()).count();
 
                     // Avoid double moving when we can single move
-                    // scores_[i] -= to_bb & pos_.us().singles() ? 100 : 0;
+                    // scores_[i] -= to_bb & pos_.get_us().singles() ? 100 : 0;
                 }
             }
 
@@ -154,7 +154,7 @@ class Sorter {
                     continue;
                 }
 
-                // const auto nowhere = ~(pos_.black() | pos_.white()).singles();
+                // const auto nowhere = ~(pos_.get_black() | pos_.get_white()).singles();
                 // const auto to_bb = libataxx::Bitboard{moves_[i].to()};
                 // const auto from_bb = libataxx::Bitboard{moves_[i].from()};
 
@@ -169,7 +169,7 @@ class Sorter {
                     // scores_[i] -= to_bb & nowhere ? 100 : 0;
 
                     // Avoid leaving big holes
-                    // scores_[i] -= (from_bb.singles() & pos_.us()).count();
+                    // scores_[i] -= (from_bb.singles() & pos_.get_us()).count();
                 }
             }
 

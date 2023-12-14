@@ -9,7 +9,7 @@ using PV = std::vector<libataxx::Move>;
 [[nodiscard]] inline bool legal_pv(const libataxx::Position &pos, const PV &pv) {
     auto npos = pos;
     for (const auto &move : pv) {
-        if (!npos.legal_move(move)) {
+        if (!npos.is_legal_move(move)) {
             return false;
         }
         npos.makemove(move);

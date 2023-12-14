@@ -62,7 +62,7 @@ class Sorter {
         if (stage_ == Stage::TT) {
             stage_ = Stage::Killer;
 
-            if (ttmove_ && pos_.legal_move(ttmove_)) {
+            if (ttmove_ && pos_.is_legal_move(ttmove_)) {
                 moves_[0] = ttmove_;
                 num_moves_ = 1;
                 return;
@@ -72,7 +72,7 @@ class Sorter {
         if (stage_ == Stage::Killer) {
             stage_ = Stage::Captures;
 
-            if (killer_ && killer_ != ttmove_ && pos_.legal_move(killer_)) {
+            if (killer_ && killer_ != ttmove_ && pos_.is_legal_move(killer_)) {
                 moves_[0] = killer_;
                 num_moves_ = 1;
                 return;

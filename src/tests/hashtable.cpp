@@ -15,13 +15,13 @@ search::TT<Entry> tt{16};
 
 std::uint64_t ttperft(const libataxx::Position &pos, const std::uint8_t depth) {
     if (depth == 1) {
-        return pos.count_moves();
+        return pos.count_legal_moves();
     } else if (depth == 0) {
         return 1;
     }
 
-    const auto entry = tt.poll(pos.hash());
-    if (entry.hash == pos.hash() && entry.depth == depth) {
+    const auto entry = tt.poll(pos.get_hash());
+    if (entry.hash == pos.get_hash() && entry.depth == depth) {
         return entry.nodes;
     }
 
@@ -36,7 +36,7 @@ std::uint64_t ttperft(const libataxx::Position &pos, const std::uint8_t depth) {
         nodes += ttperft(npos, depth - 1);
     }
 
-    tt.add(pos.hash(), Entry{pos.hash(), nodes, depth});
+    tt.add(pos.get_hash(), Entry{pos.get_hash(), nodes, depth});
 
     return nodes;
 }

@@ -34,7 +34,7 @@ void Tryhard::root(const libataxx::Position pos, const Settings &settings) noexc
             int search_time = 0;
 
             // Calculate time usage
-            if (pos.turn() == libataxx::Side::Black) {
+            if (pos.get_turn() == libataxx::Side::Black) {
                 search_time = settings.btime / 30;
             } else {
                 search_time = settings.wtime / 30;
@@ -111,10 +111,10 @@ void Tryhard::root(const libataxx::Position pos, const Settings &settings) noexc
 
 #ifndef NDEBUG
         // The TT should always have the root position in it
-        const auto ttentry = tt_.poll(pos.hash());
-        assert(ttentry.hash == pos.hash());
+        const auto ttentry = tt_.poll(pos.get_hash());
+        assert(ttentry.hash == pos.get_hash());
         assert(ttentry.move == pv[0]);
-        assert(pos.legal_move(ttentry.move));
+        assert(pos.is_legal_move(ttentry.move));
         assert(ttentry.depth >= i);
 #endif
 

@@ -6,8 +6,8 @@
 namespace search::mcts {
 
 [[nodiscard]] constexpr float phase(const libataxx::Position &pos) {
-    const int both = (pos.us() | pos.them()).count();
-    const int all = (~pos.gaps()).count();
+    const int both = (pos.get_us() | pos.get_them()).count();
+    const int all = (~pos.get_gaps()).count();
     return static_cast<float>(both) / all;
 }
 

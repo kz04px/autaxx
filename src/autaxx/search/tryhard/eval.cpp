@@ -64,8 +64,8 @@ constexpr Score<int> hole_penalties[] = {
     const auto p = phase(pos);
     Score<int> score;
 
-    score += eval_us(pos.us(), pos.them(), pos.empty());
-    score -= eval_us(pos.them(), pos.us(), pos.empty());
+    score += eval_us(pos.get_us(), pos.get_them(), pos.get_empty());
+    score -= eval_us(pos.get_them(), pos.get_us(), pos.get_empty());
 
     // Turn bonus
     score += turn_bonus;

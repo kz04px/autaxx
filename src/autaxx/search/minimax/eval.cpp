@@ -5,8 +5,8 @@ namespace search::minimax {
 
 // Return the evaluation of the position from the side to move's point of view
 [[nodiscard]] int Minimax::eval(const libataxx::Position &pos) noexcept {
-    const int num_us = pos.us().count();
-    const int num_them = pos.them().count();
+    const int num_us = pos.get_us().count();
+    const int num_them = pos.get_them().count();
     return 100 * (num_us - num_them);
 }
 

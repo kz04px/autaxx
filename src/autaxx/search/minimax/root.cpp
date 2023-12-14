@@ -27,7 +27,7 @@ void Minimax::root(const libataxx::Position pos, const Settings &settings) noexc
             int search_time = 0;
 
             // Calculate time usage
-            if (pos.turn() == libataxx::Side::Black) {
+            if (pos.get_turn() == libataxx::Side::Black) {
                 search_time = settings.btime / 30;
             } else {
                 search_time = settings.wtime / 30;

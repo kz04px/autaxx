@@ -53,8 +53,8 @@ std::uint64_t perft(const libataxx::Position &pos, const int depth) {
     libataxx::Move move;
     std::uint64_t nodes = 0;
 
-    const bool tt_legal = pos.legal_move(ttmove);
-    const bool killer_legal = pos.legal_move(killer);
+    const bool tt_legal = pos.is_legal_move(ttmove);
+    const bool killer_legal = pos.is_legal_move(killer);
 
     const bool tt_first = tt_legal;
     const bool killer_first = (tt_first && ttmove == killer) || (!tt_first && killer_legal);
@@ -82,7 +82,7 @@ std::uint64_t perft(const libataxx::Position &pos, const int depth) {
         i++;
     }
 
-    REQUIRE(i == pos.count_moves());
+    REQUIRE(i == pos.count_legal_moves());
 
     return nodes;
 }
