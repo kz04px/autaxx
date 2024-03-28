@@ -32,7 +32,7 @@ void listen() {
 
     // Create options
     Options::checks["debug"] = Options::Check(false);
-    Options::spins["hash"] = Options::Spin(1, 2048, 128);
+    Options::spins["hash"] = Options::Spin(1, 65536, 128);
     Options::strings["nnue-path"] = Options::String("./weights-8b5d1db5176c.nnue");
     Options::combos["search"] = Options::Combo("tryhard",
                                                {

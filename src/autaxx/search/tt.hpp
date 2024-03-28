@@ -13,7 +13,7 @@ class TT {
         if (mb < 1) {
             mb = 1;
         }
-        max_entries_ = (mb * 1024 * 1024) / sizeof(T);
+        max_entries_ = (mb * 1024) / sizeof(T) * 1024;
         entries_ = new T[max_entries_];
     }
 
