@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "protocol/protocol.hpp"
+#include "version.hpp"
 
 int main() {
     std::setbuf(stdin, NULL);
@@ -14,7 +15,7 @@ int main() {
     } else if (input == "ugi") {
         UGI::listen();
     } else if (input == "about") {
-        std::cout << "Autaxx" << std::endl;
+        std::cout << "Autaxx " << version_major << "." << version_minor << std::endl;
         std::cout << "Written in C++" << std::endl;
         std::cout << "Using libataxx" << std::endl;
         std::cout << "Date " << __DATE__ << std::endl;
