@@ -58,11 +58,11 @@ isready<br/>
 readyok<br/>
 uainewgame<br/>
 go depth 5<br/>
-info depth 1 nodes 15 score -135 time 0 pv f1<br/>
-info depth 2 nodes 45 score 261 time 0 pv f1<br/>
-info depth 3 nodes 565 score -147 time 0 pv g2 b1<br/>
-info depth 4 nodes 1213 score 273 time 0 pv g2 b1 f1 a2<br/>
-info depth 5 nodes 6787 score -53 time 1 pv f2 b1 e1 a2 e1c1<br/>
+info depth 1 nodes 15 score cp -135 time 0 pv f1<br/>
+info depth 2 nodes 45 score cp 261 time 0 pv f1<br/>
+info depth 3 nodes 565 score cp -147 time 0 pv g2 b1<br/>
+info depth 4 nodes 1213 score cp 273 time 0 pv g2 b1 f1 a2<br/>
+info depth 5 nodes 6787 score cp -53 time 1 pv f2 b1 e1 a2 e1c1<br/>
 bestmove f2<br/>
 quit
 
