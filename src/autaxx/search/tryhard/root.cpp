@@ -125,11 +125,11 @@ void Tryhard::root(const libataxx::Position pos, const Settings &settings) noexc
         std::cout << " score cp " << score;
         std::cout << " time " << dt.count();
         std::cout << " nodes " << stats_.nodes;
-        std::cout << " tthits " << stats_.tthits;
-        std::cout << " hashfull " << tt_.hashfull();
         if (dt.count() > 0) {
             std::cout << " nps " << 1000 * stats_.nodes / dt.count();
         }
+        std::cout << " tthits " << stats_.tthits;
+        std::cout << " hashfull " << tt_.hashfull();
         if (pv.size() > 0) {
             std::cout << " pv";
             for (const auto &move : pv) {

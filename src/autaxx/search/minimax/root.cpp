@@ -76,9 +76,9 @@ void Minimax::root(const libataxx::Position pos, const Settings &settings) noexc
         // Send info string
         const auto dt = duration_cast<milliseconds>(finish - start_time);
         std::cout << "info";
-        std::cout << " score cp " << score;
         std::cout << " depth " << i;
         std::cout << " seldepth " << stats_.seldepth;
+        std::cout << " score cp " << score;
         std::cout << " time " << dt.count();
         std::cout << " nodes " << stats_.nodes;
         if (dt.count() > 0) {
